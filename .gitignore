@@ -1,0 +1,16 @@
+Lib/
+Scripts/
+include/
+pyvenv.cfg
+*.env
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv
+.idea
+db.sqlite3
+*.sqlite3
+media/
+.env*
+.env
