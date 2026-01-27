@@ -25,9 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_views.HomePageView.as_view(), name='home'),
     path('donations', include('donations.urls')),
-    path('donations', include('fundraisers.urls')),
-    path('donations', include('pages.urls')),
-    path('donations', include('users.urls')),
+    path('fundraisers', include('fundraisers.urls')),
+    path('pages', include('pages.urls')),
+    path('users', include('users.urls')),
 ]
 
 if settings.DEBUG:
