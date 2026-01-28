@@ -1,49 +1,61 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
 from django.views import View
-from users.forms import UserSignupForm, TemplateForm
+from users.forms import UserLoginForm, UserSignupForm
 
 
 # Create your views here.
 class LoginView(View):
-    def get(self, request):
-        return render(request, 'users/login.html')
-
-class SignUpView(View):
-    template_name = 'users/signup.html'
+    template_name = 'users/login.html'
 
     def get(self, request):
+        form = UserLoginForm(request.GET or None)
+        context = {
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = UserLoginForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                form.add_error(None, 'Wrong username or password!')
 
         context = {
-            "form" : UserSignupForm,
+            'form': form,
         }
+        return render(request, self.template_name, context)
 
+
+class SignUpView(View):
+    template_name = 'account/register.html'
+
+    def get(self, request):
+        form = UserSignupForm(request.GET or None)
+        context = {
+            'form': form,
+        }
         return render(request, self.template_name, context)
 
     def post(self, request):
         form = UserSignupForm(request.POST)
 
+        context = {
+            'form': form,
+        }
+
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data.get("password1"))
+            user.save()
+            login(request, user)
+            return redirect('home')
 
-        return render(request, self.template_name)
-
-    # template_name = 'authentication/login.html'
-    # form_class = forms.LoginForm
-    #
-    # def get(self, request):
-    #     form = self.form_class()
-    #     message = ''
-    #     return render(request, self.template_name, context={'form': form, 'message': message})
-    #
-    # def post(self, request):
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         user = authenticate(
-    #             username=form.cleaned_data['username'],
-    #             password=form.cleaned_data['password'],
-    #         )
-    #         if user is not None:
-    #             login(request, user)
-    #             return redirect('home')
-    #     message = 'Login failed!'
-    #     return render(request, self.template_name, context={'form': form, 'message': message})
+        return render(request, self.template_name, context)
