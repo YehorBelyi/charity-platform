@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -12,25 +13,10 @@
             <h1>Login Form</h1>
             <h3>Enter your login credentials</h3>
 
-            <form method="post" action="">
+            <form method="post" style="width: 600px">
                 {% csrf_token %}
-                <label for="first">
-                    Username:
-                </label>
-                <input type="text" id="first" name="first"
-                    placeholder="Enter your Username" required>
-
-                <label for="password">
-                    Password:
-                </label>
-                <input type="password" id="password" name="password"
-                    placeholder="Enter your Password" required>
-
-                <div class="wrap">
-                    <button type="submit">
-                        Submit
-                    </button>
-                </div>
+                {{ form|crispy }}
+                <button type="submit">Submit</button>
             </form>
 
             <p>Not registered?
