@@ -9,19 +9,16 @@ email_validator = RegexValidator(
 )
 # forms.Form
 
-class UserLoginForm(forms.ModelForm):
+class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput)
-
-    class Meta:
-        model = CustomUser
-        fields = ["username", "password"]
 
 
 class UserSignUpForm(forms.ModelForm):
     email = forms.EmailField(validators=[email_validator])
     password = forms.CharField(widget=forms.PasswordInput)
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "contact"]
+        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "phone_number"]
