@@ -5,7 +5,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     date_of_birth = models.DateTimeField()
     gender = models.CharField(max_length=10)
-    contact = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=20)
 
     def __str__(self):
         return self.username
