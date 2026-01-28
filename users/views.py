@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import View
-from users.forms import UserLoginForm, UserSignupForm
+from users.forms import UserLoginForm, UserSignUpForm
 
 
 # Create your views here.
@@ -38,14 +38,14 @@ class SignUpView(View):
     template_name = 'account/register.html'
 
     def get(self, request):
-        form = UserSignupForm(request.GET or None)
+        form = UserSignUpForm(request.GET or None)
         context = {
             'form': form,
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = UserSignupForm(request.POST)
+        form = UserSignUpForm(request.POST)
 
         context = {
             'form': form,
