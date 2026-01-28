@@ -24,10 +24,10 @@ from charity_platform import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_views.HomePageView.as_view(), name='home'),
-    path('donations', include('donations.urls')),
-    path('fundraisers', include('fundraisers.urls')),
-    path('pages', include('pages.urls')),
-    path('users', include('users.urls')),
+    path('donations/', include('donations.urls')),
+    path('fundraisers/', include('fundraisers.urls')),
+    path('pages/', include('pages.urls')),
+    path('users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
