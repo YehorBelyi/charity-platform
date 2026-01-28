@@ -35,7 +35,7 @@ class LoginView(View):
 
 
 class SignUpView(View):
-    template_name = 'account/register.html'
+    template_name = 'users/signup.html'
 
     def get(self, request):
         form = UserSignUpForm(request.GET or None)
@@ -53,7 +53,7 @@ class SignUpView(View):
 
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data.get("password1"))
+            user.set_password(form.cleaned_data.get("password"))
             user.save()
             login(request, user)
             return redirect('home')
