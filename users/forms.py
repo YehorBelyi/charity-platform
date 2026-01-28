@@ -1,0 +1,22 @@
+from django import forms
+from django.core.validators import RegexValidator
+
+from users.models import CustomUser
+
+email_validator = RegexValidator(
+    regex=r'^[\w\.-]+@[\w\.-]+\.\w+$',
+    message="Enter a valid email address."
+)
+# forms.Form
+
+class TemplateForm(forms.Form):
+    field1 = forms.CharField()
+    field2 = forms.CharField()
+
+class UserSignupForm(forms.ModelForm):
+    email = forms.EmailField(validators=[email_validator])
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = CustomUser
+        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth"]
