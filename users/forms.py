@@ -9,14 +9,16 @@ email_validator = RegexValidator(
 )
 # forms.Form
 
-class TemplateForm(forms.Form):
-    field1 = forms.CharField()
-    field2 = forms.CharField()
+class UserLoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput)
 
-class UserSignupForm(forms.ModelForm):
+
+class UserSignUpForm(forms.ModelForm):
     email = forms.EmailField(validators=[email_validator])
     password = forms.CharField(widget=forms.PasswordInput)
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth"]
+        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "phone_number"]
