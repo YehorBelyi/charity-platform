@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">ШАГ</a>
+		<a class="navbar-brand" href="{% url 'home' %}">ШАГ</a>
 		<div class="d-flex justify-content-between " id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
 				<li class="nav-item">
@@ -16,6 +16,7 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="#">Особистий профіль</a></li>
 							<li><a class="dropdown-item" href="#">Інша дія</a></li>
+							<li><a class="dropdown-item" href="{% url 'verification_create' %}">Верифікація</a></li>
 							<form action="{% url 'logout' %}" method="post">
 								{% csrf_token %}
 								<a href="" class="dropdown-item"><button type="submit">Вихід</button></a>

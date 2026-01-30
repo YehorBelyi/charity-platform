@@ -1,0 +1,16 @@
+{% extends 'pages/index.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %} Верифікація {% endblock %}
+
+{% block container %}
+	<h3>Подати заявку на верифікацію</h3>
+
+	<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success w-100 mt-3">Відправити заявку</button>
+</form>
+
+{% endblock %}
+

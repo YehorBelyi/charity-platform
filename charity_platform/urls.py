@@ -28,6 +28,7 @@ urlpatterns = [
     path('fundraisers/', include('fundraisers.urls')),
     path('pages/', include('pages.urls')),
     path('users/', include('users.urls')),
+    path('verifications/', include('verifications.urls')),
 ]
 
 if settings.DEBUG:
