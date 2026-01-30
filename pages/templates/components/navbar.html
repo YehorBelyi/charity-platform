@@ -1,7 +1,32 @@
-<nav>
-    <div class="cont" style="display: flex; gap: 20px; font-size: 30px">
-        <div class="nav-item"><a href="{% url "login" %}">Login</a></div>
-        <div class="nav-item"><a href="{% url "signup" %}">Signup</a></div>
-        <div class="nav-item"><a href="{% url "create_announcement"%}">Create announcement</a></div>
-    </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">ШАГ</a>
+		<div class="d-flex justify-content-between " id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
+				<li class="nav-item">
+					<a class="nav-item btn btn-warning" aria-current="page" href="{% url "create_announcement" %}">Створити
+						оголошення</a>
+				</li>
+				{% if user.is_authenticated %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+						   aria-expanded="false">
+							{{ user.username }}
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Особистий профіль</a></li>
+							<li><a class="dropdown-item" href="#">Інша дія</a></li>
+							<form action="{% url 'logout' %}" method="post">
+								{% csrf_token %}
+								<a href="" class="dropdown-item"><button type="submit">Вихід</button></a>
+							</form>
+						</ul>
+					</li>
+				{% else %}
+					<a href="{% url "login" %}" class="btn btn-success">Вхід</a>
+					<a href="{% url "signup" %}" class="btn btn-warning">Реєтрація</a>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
 </nav>

@@ -3,12 +3,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Charity Platform</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<title>Charity Platform</title>
 </head>
 <body>
-    {% include 'components/navbar.html' %}
-    <h1>hello world from charity platform</h1>
+	<div class="container">
+		{% include 'components/navbar.html' %}
+		<h1>hello world from charity platform</h1>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+			crossorigin="anonymous"></script>
 </body>
 </html>
