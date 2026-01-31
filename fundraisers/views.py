@@ -29,3 +29,4 @@ class CreateAnnouncementView(LoginRequiredMixin, CreateView):
 class AnnouncementsView(ListView):
     template_name = "fundraisers/announcements.html"
     queryset = FundraisingAnnouncement.objects.all()
+    paginate_by = 15
