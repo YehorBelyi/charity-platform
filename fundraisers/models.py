@@ -2,6 +2,7 @@ from django.db import models
 
 class FundraisingAnnouncement(models.Model):
     title = models.CharField(max_length=300)
+    author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
     current_sum = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     target_sum = models.DecimalField(max_digits=12, decimal_places=2)
     description = models.TextField()
