@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
 from .models import FundraisingAnnouncement
@@ -12,8 +13,14 @@ def fundraising_announcement(request, announcement_id):
     return render(request, "fundraisers/announcement.html", context)
 
 
-class CreateAnnouncementView(CreateView):
+class CreateAnnouncementView(LoginRequiredMixin, CreateView):
     template_name = "fundraisers/create_announcement.html"
     model = FundraisingAnnouncement
     form_class = AddFundraisingAnnouncementForm
     success_url = "/"
+    login_url = "/users/login/"
+
+    # add user to the form
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
