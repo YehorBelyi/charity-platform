@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from .models import FundraisingAnnouncement
 from .forms import AddFundraisingAnnouncementForm
 
@@ -24,3 +24,8 @@ class CreateAnnouncementView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class AnnouncementsView(ListView):
+    template_name = "fundraisers/announcements.html"
+    queryset = FundraisingAnnouncement.objects.all()
