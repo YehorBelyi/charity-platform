@@ -30,3 +30,18 @@ class AddFundraisingAnnouncementForm(forms.ModelForm):
     class Meta:
         model = FundraisingAnnouncement
         fields = ("title", "target_sum", "description", "photo", "operational_direction", "unit")
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=300, required=False, label="")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "get"
+        self.helper.form_class = "my-4 w-100"
+
+        self.helper.layout = Layout(
+            Field("search", placeholder="Назва збору"),
+            Submit("", "Пошук")
+        )
