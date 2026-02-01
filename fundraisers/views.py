@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, ListView
 from .models import FundraisingAnnouncement
-from .forms import AddFundraisingAnnouncementForm
+from .forms import AddFundraisingAnnouncementForm, SearchForm
+
 
 def fundraising_announcement(request, announcement_id):
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
@@ -30,3 +31,15 @@ class AnnouncementsView(ListView):
     template_name = "fundraisers/announcements.html"
     queryset = FundraisingAnnouncement.objects.all()
     paginate_by = 15
+    ordering = "-date"
+
+    # add SearchForm to the context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = SearchForm(self.request.GET)
+        return context
+
+    # filter queryset by user search request
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(title__icontains=self.request.GET.get("search") or "")

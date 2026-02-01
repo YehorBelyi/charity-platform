@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <!doctype html>
 <html>
     <head>
@@ -8,16 +10,22 @@
     </head>
     <body>
         <div class="d-flex flex-column align-items-center">
-            {% for announcement in object_list %}
-            <div class="border w-50 my-2">
-                <a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}">
-                    <h1>{{announcement.title}}</h1>
-                </a>
-                {% if announcement.photo %}
-                <img src="{{ announcement.photo.url }}" alt="announcement photo" />
+            <div class="w-50">
+                {% crispy form %}
+                {% if not object_list %}
+                <h2>За Вашим запитом нічого не знайдено</h2>
                 {% endif %}
+                {% for announcement in object_list %}
+                <div class="border my-2">
+                    <a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}">
+                        <h1>{{announcement.title}}</h1>
+                    </a>
+                    {% if announcement.photo %}
+                    <img src="{{ announcement.photo.url }}" alt="announcement photo" />
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
 
         {% if is_paginated %}
