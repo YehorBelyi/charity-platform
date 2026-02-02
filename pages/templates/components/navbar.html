@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{% url 'home' %}">ШАГ</a>
+		<div class="d-flex justify-content-between " id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
+				<li class="nav-item">
+					<a class="nav-item btn btn-success" aria-current="page" href="{% url 'fundraisers:announcements' %}">Всі
+						збори</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-item btn btn-warning" aria-current="page" href="{% url 'fundraisers:create_announcement' %}">Створити
+						збір</a>
+				</li>
+				{% if user.is_authenticated %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+						   aria-expanded="false">
+							{{ user.username }}
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Особистий профіль</a></li>
+							<li><a class="dropdown-item" href="#">Інша дія</a></li>
+							<li><a class="dropdown-item" href="{% url 'verification_create' %}">Верифікація</a></li>
+							<form action="{% url 'logout' %}" method="post">
+								{% csrf_token %}
+								<a href="" class="dropdown-item"><button type="submit">Вихід</button></a>
+							</form>
+						</ul>
+					</li>
+				{% else %}
+					<a href="{% url "login" %}" class="btn btn-success">Вхід</a>
+					<a href="{% url "signup" %}" class="btn btn-warning">Реєтрація</a>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>

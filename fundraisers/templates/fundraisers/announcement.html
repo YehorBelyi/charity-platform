@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Charity Platform</title>
+    </head>
+    <body>
+        <h3>Заголовок: {{announcement.title}}</h3>
+        <h3>Опис: {{announcement.description}}</h3>
+        <h3>Поточна сума: {{announcement.current_sum}}</h3>
+        <h3>Цільова сума: {{announcement.target_sum}}</h3>
+        {% if announcement.photo %}
+        <img src="{{ announcement.photo.url }}" alt="announcement photo" />
+        {% else %}
+        <h3>Фото відсутнє</h3>
+        {% endif %}
+        <h3>Операційний напрямок: {{announcement.operational_direction}}</h3>
+        <h3>Підрозділ: {{announcement.unit}}</h3>
+        <h3>Дата створення оголошення: {{announcement.date}}</h3>
+    </body>
+</html>
