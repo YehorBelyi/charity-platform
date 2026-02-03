@@ -2,6 +2,9 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from django import forms
+
+
 # Create your models here.
 class CustomUser(AbstractUser):
     date_of_birth = models.DateTimeField(default=timezone.now, blank=True, null=True)
@@ -10,3 +13,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'date_of_birth', 'gender', 'phone_number']
