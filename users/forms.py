@@ -21,4 +21,9 @@ class UserSignUpForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "phone_number"]
+        fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "phone_number", "gender"]
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'date_of_birth', 'gender', 'phone_number']

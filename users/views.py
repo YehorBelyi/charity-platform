@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
-from users.forms import UserLoginForm, UserSignUpForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 
 # Create your views here.
@@ -60,6 +61,25 @@ class SignUpView(View):
 
         return render(request, self.template_name, context)
 
+
+class UserProfileView(LoginRequiredMixin, View):
+    template_name = 'users/profile.html'
+    login_url = 'login'
+
+    def get(self, request):
+        form = UserUpdateForm(instance=request.user)
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = UserUpdateForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+        context = {'form': form}
+        return render(request, self.template_name, context)
 class LogoutView(View):
     template_name = 'pages/index.html'
 
