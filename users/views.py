@@ -2,8 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from users.forms import UserLoginForm, UserSignUpForm
-from users.models import UserUpdateForm
+from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 
 # Create your views here.
