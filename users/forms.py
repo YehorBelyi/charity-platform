@@ -24,6 +24,7 @@ class UserSignUpForm(forms.ModelForm):
         fields = ["username", "first_name", "last_name", "email", "password", "date_of_birth", "phone_number", "gender"]
 
 class UserUpdateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'first_name', 'last_name', 'date_of_birth', 'gender', 'phone_number']
