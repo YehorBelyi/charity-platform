@@ -7,14 +7,11 @@
 </head>
 <body>
     <div>
-        {{ user.username }}
-        {{ user.first_name }}
-        {{ user.last_name }}
-        {{ user.gender }}
-        {{ user.date_of_birth }}
-        {{ user.phone_number }}
-        {{ user.email }}
-        {{ user.password }}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </body>
 </html>
