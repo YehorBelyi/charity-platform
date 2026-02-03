@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -80,3 +80,9 @@ class UserProfileView(LoginRequiredMixin, View):
 
         context = {'form': form}
         return render(request, self.template_name, context)
+class LogoutView(View):
+    template_name = 'pages/index.html'
+
+    def post(self, request):
+        logout(request)
+        return render(request, self.template_name)
