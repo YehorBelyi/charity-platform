@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <div>
+        {{ user.username }}
+        {{ user.first_name }}
+        {{ user.last_name }}
+        {{ user.gender }}
+        {{ user.date_of_birth }}
+        {{ user.phone_number }}
+        {{ user.email }}
+        {{ user.password }}
+    </div>
+</body>
+</html>
