@@ -1,6 +1,7 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Field, Submit, Layout
 from django import forms
+from units.models import Unit
 from .models import FundraisingAnnouncement
 
 class AddFundraisingAnnouncementForm(forms.ModelForm):
@@ -9,7 +10,7 @@ class AddFundraisingAnnouncementForm(forms.ModelForm):
     description = forms.CharField(label="Опис:", widget=forms.Textarea())
     photo = forms.ImageField(label="Фото для збору:", required=False)
     operational_direction = forms.CharField(label="Напрямок фронту:", required=False)
-    unit = forms.CharField(label="Підрозділ:", required=False)
+    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label="Підрозділ", required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
