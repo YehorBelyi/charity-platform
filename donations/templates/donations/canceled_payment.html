@@ -1,0 +1,7 @@
+{% extends "pages/index.html" %}
+
+{% block title %}Successful{% endblock %}
+
+{% block container %}
+	<div class="alert alert-danger mt-2 text-center">An error occured while processing this payment... {{payment_error}}</div>
+{% endblock %}
