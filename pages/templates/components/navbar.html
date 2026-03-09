@@ -18,7 +18,7 @@
 							{{ user.username }}
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Особистий профіль</a></li>
+							<li><a class="dropdown-item" href="{% url 'profile' %}">Особистий профіль</a></li>
 							<li><a class="dropdown-item" href="#">Інша дія</a></li>
 							<li><a class="dropdown-item" href="{% url 'verification_create' %}">Верифікація</a></li>
 							<form action="{% url 'logout' %}" method="post">

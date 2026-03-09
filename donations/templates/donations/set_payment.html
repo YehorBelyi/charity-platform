@@ -1,0 +1,17 @@
+{% extends "pages/index.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Successful{% endblock %}
+
+{% block container %}
+	<h1>{{ announcement.title }}</h1>
+	<form method="post" action="{% url 'create-checkout-session' announcement.id %}">
+		{% csrf_token %}
+
+		<input type="number" name="amount" step="1" min="1" placeholder="Сума донату" required>
+
+		<button type="submit">
+			Донат
+		</button>
+	</form>
+{% endblock %}

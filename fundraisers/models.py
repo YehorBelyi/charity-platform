@@ -8,7 +8,7 @@ class FundraisingAnnouncement(models.Model):
     description = models.TextField()
     photo = models.ImageField(upload_to="announcement_images/", null=True, blank=True)
     operational_direction = models.CharField(max_length=100, null=True, blank=True)
-    unit = models.CharField(max_length=200, null=True, blank=True)
+    unit = models.ForeignKey("units.Unit", on_delete=models.SET_NULL, null=True, blank=True)
     is_closed = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
 
