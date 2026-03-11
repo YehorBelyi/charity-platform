@@ -24,23 +24,21 @@ def stripe_webhook_view(request):
     except stripe.error.SignatureVerificationError as e:
         return HttpResponse(status=400)
 
-    if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
 
-        if event["type"] == "checkout.session.completed":
-            session = event["data"]["object"]
+        announcement_id = session["metadata"]["announcement_id"]
+        amount = session["metadata"]["amount"]
 
-            announcement_id = session["metadata"]["announcement_id"]
-            amount = session["metadata"]["amount"]
+        announcement = FundraisingAnnouncement.objects.get(
+            id=announcement_id
+        )
 
-            announcement = FundraisingAnnouncement.objects.get(
-                id=announcement_id
-            )
-
-            Payment.objects.create(
-                announcement=announcement,
-                amount=amount,
-                stripe_payment_intent=session["payment_intent"]
-            )
+        Payment.objects.create(
+            announcement=announcement,
+            amount=amount,
+            stripe_payment_intent=session["payment_intent"],
+            is_finished=True
+        )
 
     return HttpResponse(status=200)
