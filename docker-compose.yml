@@ -20,5 +20,13 @@ services:
     command: listen --skip-verify --forward-to web:8000/donations/webhooks/stripe/
     env_file:
       - .env.stripe
-    networks:
-      - default
+
+  tests:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    command: pytest
+    profiles:
+      - test
