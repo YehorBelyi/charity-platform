@@ -4,12 +4,17 @@
 {% block title %}Profile{% endblock %}
 
 {% block container %}
-<h1>Hello there</h1>
-<!--	<div>-->
-<!--		<form method="post">-->
-<!--			{% csrf_token %}-->
-<!--			{{ form|crispy }}-->
-<!--			<button type="submit">Submit</button>-->
-<!--		</form>-->
-<!--	</div>-->
+<div>
+    <h2>User Information</h2>
+    <p>Username: {{ username }}</p>
+    <p>Full name: {{ full_name }}</p>
+    <p>Status: {{ status }}</p>
+    <p>Rank: {{ rank }}</p>
+    <p>Phone: {{ phone_number }}</p>
+    <a href="{% url 'details' %}">Details</a>
+</div>
+
+<div>
+    <h2>Donation History</h2>
+</div>
 {% endblock %}
