@@ -1,0 +1,14 @@
+{% extends 'pages/index.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile Info{% endblock %}
+
+{% block container %}
+	<div>
+		<form method="post">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+{% endblock %}
