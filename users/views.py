@@ -81,6 +81,7 @@ class UserProfileView(LoginRequiredMixin, View):
             'status': request.user.get_status_display(),
             'rank': request.user.get_rank_display(),
             'phone_number': request.user.phone_number,
+            'avatar' : request.user.avatar.url,
         }
         return render(request, self.template_name, context)
 
