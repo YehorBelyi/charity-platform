@@ -1,37 +1,34 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{% url 'home' %}">ШАГ</a>
-		<div class="d-flex justify-content-between " id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
-				<li class="nav-item">
-					<a class="nav-item btn btn-success" aria-current="page" href="{% url 'fundraisers:announcements' %}">Всі
-						збори</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-item btn btn-warning" aria-current="page" href="{% url 'fundraisers:create_announcement' %}">Створити
-						збір</a>
-				</li>
-				{% if user.is_authenticated %}
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-						   aria-expanded="false">
-							{{ user.username }}
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="{% url 'profile' %}">Особистий профіль</a></li>
-							<li><a class="dropdown-item" href="#">Інша дія</a></li>
-							<li><a class="dropdown-item" href="{% url 'verification_create' %}">Верифікація</a></li>
-							<form action="{% url 'logout' %}" method="post">
-								{% csrf_token %}
-								<a href="" class="dropdown-item"><button type="submit">Вихід</button></a>
-							</form>
-						</ul>
-					</li>
-				{% else %}
-					<a href="{% url 'login' %}" class="btn btn-success">Вхід</a>
-					<a href="{% url 'signup' %}" class="btn btn-warning">Реєтрація</a>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
-</nav>
+{% load static %}
+<header class="page-header">
+    <div class="container header-container">
+        <a class="header-logo" href="{% url 'home' %}">ШАГ</a>
+        
+        <button type="button" class="menu-btn" data-menu-open>
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 10H24" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                <path d="M4 18H24" stroke="black" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="mobile-menu" data-menu>
+        <div class="mobile-menu-container">
+            <button class="mobile-menu-close" data-menu-close>
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 8L8 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 8L20 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <nav class="mobile-menu-nav">
+                <ul class="mobile-ul-menu">
+                    <li class="mobile-list-item"><a class="mobile-link active" href="{% url 'home' %}">Головна</a></li>
+                    <li class="mobile-list-item"><a class="mobile-link" href="{% url 'fundraisers:announcements' %}">Всі збори</a></li>
+                    <li class="mobile-list-item"><a class="mobile-link" href="{% url 'fundraisers:create_announcement' %}">Створити збір</a></li>
+                    <li class="mobile-list-item"><a class="mobile-link" href="{% url 'login' %}">Вхід</a></li>
+                    <li class="mobile-list-item"><a class="mobile-link" href="{% url 'signup' %}">Реєстрація</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
