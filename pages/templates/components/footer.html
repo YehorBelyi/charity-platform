@@ -1,32 +1,63 @@
 {% load static %}
-<footer class="footer">
+<footer id="footer" class="footer">
     <div class="container">
-        <p class="footer-text">
-            Допомагайте тим, хто цього потребує. Кожна гривня наближає нас до мети.
+        <div class="footer-one">
+            <a class="footer-logo" href="{% url 'home' %}">ШАГ</a>
+            
+            <ul class="footer-social-list">
+                <li>
+                    <a class="footer-social-link" href="#" target="_blank">
+                        <svg class="footer-social-icon" width="18" height="18">
+                            <use href="{% static 'images/icons.svg' %}#icon-facebook"></use>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a class="footer-social-link" href="#" target="_blank">
+                        <svg class="footer-social-icon" width="18" height="18">
+                            <use href="{% static 'images/icons.svg' %}#icon-instagram"></use>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a class="footer-social-link" href="#" target="_blank">
+                        <svg class="footer-social-icon" width="18" height="18">
+                            <use href="{% static 'images/icons.svg' %}#icon-twitter"></use>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+            
+            <a class="footer-tel" href="tel:+380990000000">+380 (99) 000-00-00</a>
+        </div>
+
+        <p class="footer-header">
+            Твій маленький крок може стати великим початком для когось іншого. Допомагай легко разом із платформою ШАГ.
         </p>
-        
-        <ul class="social-list">
-            <li class="social-item">
-                <a href="#" class="social-link">
-                    <svg width="24" height="24" class="social-icon">
-                        <use href="{% static 'images/icons.svg' %}#icon-instagram"></use>
-                    </svg>
+
+        <div class="footer-nav">
+            <ul class="footer-nav-list">
+                <li class="footer-nav-item"><a href="{% url 'home' %}" class="footer-nav-link">Головна</a></li>
+                <li class="footer-nav-item"><a href="{% url 'fundraisers:announcements' %}" class="footer-nav-link">Всі збори</a></li>
+                <li class="footer-nav-item"><a href="{% url 'fundraisers:create_announcement' %}" class="footer-nav-link">Створити збір</a></li>
+                <li class="footer-nav-item"><a href="{% url 'login' %}" class="footer-nav-link">Вхід</a></li>
+            </ul>
+            
+            <address class="footer-address">
+                <a class="footer-address-link" href="#" target="_blank">
+                    Україна, м. Київ, вул. Благодійна, 1
                 </a>
-            </li>
-            <li class="social-item">
-                <a href="#" class="social-link">
-                    <svg width="24" height="24" class="social-icon">
-                        <use href="{% static 'images/icons.svg' %}#icon-facebook"></use>
-                    </svg>
-                </a>
-            </li>
-            <li class="social-item">
-                <a href="#" class="social-link">
-                    <svg width="24" height="24" class="social-icon">
-                        <use href="{% static 'images/icons.svg' %}#icon-twitter"></use>
-                    </svg>
-                </a>
-            </li>
-        </ul>
+            </address>
+        </div>
+
+        <span class="footer-line"></span>
+
+        <div class="footer-descr">
+            <p class="maps">© 2026 ШАГ. Всі права захищені.</p>
+            <div class="footer-descr-list">
+                <a href="#" class="footer-descr-link">Умови використання</a>
+                <a href="#" class="footer-descr-link">Політика конфіденційності</a>
+            </div>
+        </div>
     </div>
 </footer>
