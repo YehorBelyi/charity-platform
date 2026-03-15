@@ -62,8 +62,32 @@ class SignUpView(View):
         return render(request, self.template_name, context)
 
 
+class LogoutView(View):
+    template_name = 'pages/index.html'
+
+    def post(self, request):
+        logout(request)
+        return render(request, self.template_name)
+
+
 class UserProfileView(LoginRequiredMixin, View):
     template_name = 'users/profile.html'
+    login_url = 'login'
+
+    def get(self, request):
+        context = {
+            'username': request.user.username,
+            'full_name': f"{request.user.first_name} {request.user.last_name}",
+            'status': request.user.get_status_display(),
+            'rank': request.user.get_rank_display(),
+            'phone_number': request.user.phone_number,
+            'avatar' : request.user.avatar.url,
+        }
+        return render(request, self.template_name, context)
+
+
+class UserDetailsView(LoginRequiredMixin, View):
+    template_name = 'users/details.html'
     login_url = 'login'
 
     def get(self, request):
@@ -76,13 +100,10 @@ class UserProfileView(LoginRequiredMixin, View):
 
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('details')
 
         context = {'form': form}
         return render(request, self.template_name, context)
-class LogoutView(View):
-    template_name = 'pages/index.html'
 
-    def post(self, request):
-        logout(request)
-        return render(request, self.template_name)
+
+
