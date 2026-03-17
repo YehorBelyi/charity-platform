@@ -9,5 +9,5 @@ urlpatterns = [
     path('cancellation/', CanceledPaymentView.as_view(), name='payment-canceled'),
     path('create/<int:announcement_id>', SetPaymentView.as_view(), name='payment-set'),
     path('create-checkout-session/<int:announcement_id>', CreateCheckoutSessionView.as_view(),
-         name='create-checkout-session'),
+         name='create-checkout-session')
 ]

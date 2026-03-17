@@ -1,10 +1,11 @@
-from django.contrib.auth.models import User
+from users.models import CustomUser
 from django.db import models
 import datetime
 
 # Create your models here.
 class Payment(models.Model):
     announcement = models.ForeignKey('fundraisers.FundraisingAnnouncement', on_delete=models.CASCADE, related_name='payments')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(auto_now_add=True)
     stripe_payment_intent = models.CharField(max_length=255, default='')

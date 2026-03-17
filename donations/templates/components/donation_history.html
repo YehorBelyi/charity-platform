@@ -1,0 +1,14 @@
+<div class="container border border-3 rounded">
+	<div class="row border m-2">
+		<div class="col">Оголошення</div>
+		<div class="col">Сума донату, грн</div>
+		<div class="col">Дата оплати</div>
+	</div>
+	{% for donation in history %}
+		<div class="row border m-2">
+			<div class="col">{{ donation.announcement.title }}</div>
+			<div class="col">{{ donation.amount }}</div>
+			<div class="col"> {{ donation.date }}</div>
+		</div>
+	{% endfor %}
+</div>
