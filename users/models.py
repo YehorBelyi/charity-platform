@@ -18,13 +18,35 @@ RANK_CHOICES = (
 
 
 class CustomUser(AbstractUser):
+    """
+    Custom user model for the application.
+
+    Extends the standard Django AbstractUser to include profile information
+    such as avatar, status (civilian/volunteer/soldier), and verification status.
+    """
+
+    #: Profile picture of the user.
     avatar = models.ImageField(upload_to="profile_pictures/", null=True, blank=True)
+
+    #: User's date of birth.
     date_of_birth = models.DateTimeField(default=timezone.now, blank=True, null=True)
+
+    #: Contact phone number.
     phone_number = models.CharField(max_length=20, null=True, blank=True)
+
+    #: Social status of the user (e.g., Civilian, Volunteer).
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, null=True, blank=False, default='none')
+
+    #: Military or organizational rank.
     rank = models.CharField(max_length=30, choices=RANK_CHOICES, null=True, blank=False, default='none')
 
     def is_verified(self):
+        """
+        Check if the user has an approved verification request.
+
+        Returns:
+            bool: True if at least one approved request exists, False otherwise.
+        """
         return self.verification_requests.filter(
             status=VerificationRequest.Status.APPROVED
         ).exists()

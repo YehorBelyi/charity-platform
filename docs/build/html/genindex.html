@@ -72,6 +72,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -105,6 +106,20 @@
 </li>
       <li><a href="users.html#users.models.CustomUser.avatar">avatar (users.models.CustomUser attribute)</a>
 </li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="users.html#users.forms.UserLoginForm.base_fields">base_fields (users.forms.UserLoginForm attribute)</a>
+
+      <ul>
+        <li><a href="users.html#users.forms.UserSignUpForm.base_fields">(users.forms.UserSignUpForm attribute)</a>
+</li>
+        <li><a href="users.html#users.forms.UserUpdateForm.base_fields">(users.forms.UserUpdateForm attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -162,6 +177,8 @@
 </li>
       <li><a href="users.html#users.models.CustomUser">CustomUser (class in users.models)</a>
 </li>
+      <li><a href="users.html#users.admin.CustomUserAdmin">CustomUserAdmin (class in users.admin)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -178,6 +195,14 @@
 </li>
       <li><a href="users.html#users.models.CustomUser.date_of_birth">date_of_birth (users.models.CustomUser attribute)</a>
 </li>
+      <li><a href="users.html#users.forms.UserLoginForm.declared_fields">declared_fields (users.forms.UserLoginForm attribute)</a>
+
+      <ul>
+        <li><a href="users.html#users.forms.UserSignUpForm.declared_fields">(users.forms.UserSignUpForm attribute)</a>
+</li>
+        <li><a href="users.html#users.forms.UserUpdateForm.declared_fields">(users.forms.UserUpdateForm attribute)</a>
+</li>
+      </ul></li>
       <li><a href="fundraisers.html#fundraisers.models.FundraisingAnnouncement.description">description (fundraisers.models.FundraisingAnnouncement attribute)</a>
 
       <ul>
@@ -209,6 +234,8 @@
         <li><a href="donations.migrations.html#module-donations.migrations">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     donations.migrations.0001_initial
 
@@ -216,8 +243,6 @@
         <li><a href="donations.migrations.html#module-donations.migrations.0001_initial">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     donations.migrations.0002_payment_stripe_payment_intent
 
@@ -392,6 +417,10 @@
 </li>
         <li><a href="donations.html#donations.views.SuccessfulPaymentView.get">(donations.views.SuccessfulPaymentView method)</a>
 </li>
+        <li><a href="users.html#users.views.LoginView.get">(users.views.LoginView method)</a>
+</li>
+        <li><a href="users.html#users.views.UserProfileView.get">(users.views.UserProfileView method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -427,6 +456,8 @@
 </li>
       <li><a href="users.html#users.models.CustomUser.is_superuser">is_superuser (users.models.CustomUser attribute)</a>
 </li>
+      <li><a href="users.html#users.models.CustomUser.is_verified">is_verified() (users.models.CustomUser method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -439,11 +470,17 @@
 </li>
       <li><a href="units.html#units.models.Unit.level">level (units.models.Unit attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="units.html#units.models.Unit.LEVEL_CHOICES">LEVEL_CHOICES (units.models.Unit attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="users.html#users.admin.CustomUserAdmin.list_display">list_display (users.admin.CustomUserAdmin attribute)</a>
+</li>
       <li><a href="users.html#users.models.CustomUser.logentry_set">logentry_set (users.models.CustomUser attribute)</a>
+</li>
+      <li><a href="users.html#users.views.UserProfileView.login_url">login_url (users.views.UserProfileView attribute)</a>
+</li>
+      <li><a href="users.html#users.views.LoginView">LoginView (class in users.views)</a>
 </li>
       <li><a href="units.html#units.models.Unit.logo">logo (units.models.Unit attribute)</a>
 </li>
@@ -685,8 +722,6 @@
         <li><a href="pages.html#module-pages.tests">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pages.urls
 
@@ -694,6 +729,8 @@
         <li><a href="pages.html#module-pages.urls">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pages.views
 
@@ -716,7 +753,13 @@
       <li><a href="fundraisers.html#fundraisers.models.FundraisingAnnouncement.photo">photo (fundraisers.models.FundraisingAnnouncement attribute)</a>
 </li>
       <li><a href="donations.html#donations.views.CreateCheckoutSessionView.post">post() (donations.views.CreateCheckoutSessionView method)</a>
+
+      <ul>
+        <li><a href="users.html#users.views.LoginView.post">(users.views.LoginView method)</a>
 </li>
+        <li><a href="users.html#users.views.SignUpView.post">(users.views.SignUpView method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -742,6 +785,8 @@
       <li><a href="donations.html#donations.views.SetPaymentView">SetPaymentView (class in donations.views)</a>
 </li>
       <li><a href="units.html#units.models.Unit.short_description">short_description (units.models.Unit attribute)</a>
+</li>
+      <li><a href="users.html#users.views.SignUpView">SignUpView (class in users.views)</a>
 </li>
       <li><a href="users.html#users.models.CustomUser.status">status (users.models.CustomUser attribute)</a>
 
@@ -771,6 +816,12 @@
         <li><a href="donations.html#donations.views.SetPaymentView.template_name">(donations.views.SetPaymentView attribute)</a>
 </li>
         <li><a href="donations.html#donations.views.SuccessfulPaymentView.template_name">(donations.views.SuccessfulPaymentView attribute)</a>
+</li>
+        <li><a href="users.html#users.views.LoginView.template_name">(users.views.LoginView attribute)</a>
+</li>
+        <li><a href="users.html#users.views.SignUpView.template_name">(users.views.SignUpView attribute)</a>
+</li>
+        <li><a href="users.html#users.views.UserProfileView.template_name">(users.views.UserProfileView attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -860,7 +911,11 @@
       </ul></li>
       <li><a href="users.html#users.models.CustomUser.user_permissions">user_permissions (users.models.CustomUser attribute)</a>
 </li>
+      <li><a href="users.html#users.forms.UserLoginForm">UserLoginForm (class in users.forms)</a>
+</li>
       <li><a href="users.html#users.models.CustomUser.username">username (users.models.CustomUser attribute)</a>
+</li>
+      <li><a href="users.html#users.views.UserProfileView">UserProfileView (class in users.views)</a>
 </li>
       <li>
     users
@@ -997,6 +1052,10 @@
         <li><a href="users.html#module-users.views">module</a>
 </li>
       </ul></li>
+      <li><a href="users.html#users.forms.UserSignUpForm">UserSignUpForm (class in users.forms)</a>
+</li>
+      <li><a href="users.html#users.forms.UserUpdateForm">UserUpdateForm (class in users.forms)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1004,6 +1063,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="users.html#users.models.CustomUser.verification_requests">verification_requests (users.models.CustomUser attribute)</a>
+</li>
+      <li><a href="users.html#users.admin.CustomUserAdmin.verification_status">verification_status() (users.admin.CustomUserAdmin method)</a>
 </li>
       <li><a href="verifications.html#verifications.models.VerificationDocument">VerificationDocument (class in verifications.models)</a>
 </li>

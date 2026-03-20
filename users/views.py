@@ -9,9 +9,11 @@ from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 # Create your views here.
 class LoginView(View):
+    """Handles user authentication and session creation."""
     template_name = 'users/login.html'
 
     def get(self, request):
+        """Display the login form."""
         form = UserLoginForm(request.GET or None)
         context = {
             'form': form,
@@ -19,6 +21,7 @@ class LoginView(View):
         return render(request, self.template_name, context)
 
     def post(self, request):
+        """Validate credentials and log the user in."""
         form = UserLoginForm(request.POST)
 
         if form.is_valid():
@@ -38,6 +41,7 @@ class LoginView(View):
 
 
 class SignUpView(View):
+    """Handles new user registration."""
     template_name = 'users/signup.html'
 
     def get(self, request):
@@ -48,6 +52,7 @@ class SignUpView(View):
         return render(request, self.template_name, context)
 
     def post(self, request):
+        """Create a new user instance and log them in upon success."""
         form = UserSignUpForm(request.POST)
 
         context = {
@@ -73,10 +78,17 @@ class LogoutView(View):
 
 
 class UserProfileView(LoginRequiredMixin, View):
+    """Displays the user's public profile and donation history."""
     template_name = 'users/profile.html'
     login_url = 'login'
 
     def get(self, request):
+        """
+        Fetch user details and finished payment history.
+
+        Context Includes:
+            history: Prefetched list of successful payments.
+        """
         current_user = request.user
         history = Payment.objects.prefetch_related("user").filter(user=current_user).filter(is_finished=True)
 
