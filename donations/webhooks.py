@@ -11,6 +11,19 @@ webhook_secret = settings.STRIPE_WEBHOOK_SECRET
 
 @csrf_exempt
 def stripe_webhook_view(request):
+    """
+    Handle Stripe webhook events to process asynchronous payment updates.
+
+    This view verifies the Stripe signature, constructs the event, and
+    if the payment is successful (checkout.session.completed), it creates
+    a corresponding Payment record in the database.
+
+    Args:
+        request (HttpRequest): The incoming POST request from Stripe.
+
+    Returns:
+        HttpResponse: 200 OK if processed, 400 Bad Request on verification failure.
+    """
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     event = None
