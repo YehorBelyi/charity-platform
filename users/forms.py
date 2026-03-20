@@ -24,8 +24,11 @@ class UserSignUpForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "status", "rank", "email", "password", "date_of_birth",
-                  "phone_number"]
+        fields = ["username", "first_name", "last_name", "status", "rank",
+                  "email", "password", "date_of_birth", "phone_number", "short_bio"]
+        widgets = {
+            'short_bio': forms.Textarea(attrs={'rows': 4}),
+        }
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -34,4 +37,7 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number"]
+        fields = ["username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number", "short_bio"]
+        widgets = {
+            'short_bio': forms.Textarea(attrs={'rows': 4}),
+        }

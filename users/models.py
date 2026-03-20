@@ -40,6 +40,9 @@ class CustomUser(AbstractUser):
     #: Military or organizational rank.
     rank = models.CharField(max_length=30, choices=RANK_CHOICES, null=True, blank=False, default='none')
 
+    #: Short information about user.
+    short_bio = models.CharField(max_length=200, null=True)
+
     def is_verified(self):
         """
         Check if the user has an approved verification request.
