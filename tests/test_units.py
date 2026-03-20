@@ -43,4 +43,4 @@ class TestUnits:
             description="Повний опис спецпідрозділу"
         )
 
-        assert unit.level not in dict(Unit.LEVEL_CHOICES)
+        assert unit.level in dict(Unit.LEVEL_CHOICES)

@@ -57,4 +57,4 @@ class TestFundraisers:
             is_closed=True
         )
 
-        assert announcement.is_closed is False
+        assert announcement.is_closed is True
