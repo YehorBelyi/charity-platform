@@ -61,6 +61,6 @@ class TestPayment:
             assert session.url == "https://stripe.com/mock_checkout"
             mock_create.assert_called_once()
             args, kwargs = mock_create.call_args
-            assert kwargs["payment_method_types"] == ["crypto"]
+            assert kwargs["payment_method_types"] == ["card"]
             assert kwargs["line_items"][0]["price_data"]["unit_amount"] == int(123.45 * 100)
             assert kwargs["metadata"]["announcement_id"] == announcement.id

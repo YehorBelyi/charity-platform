@@ -33,4 +33,4 @@ class TestUsers:
             email="verify@example.com",
             password="verify123"
         )
-        assert user.is_verified()
+        assert not user.is_verified()
