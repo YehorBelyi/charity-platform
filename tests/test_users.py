@@ -34,5 +34,3 @@ class TestUsers:
             password="verify123"
         )
         assert user.is_verified()
-
-#  re

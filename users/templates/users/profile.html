@@ -4,18 +4,21 @@
 {% block title %}Profile{% endblock %}
 
 {% block container %}
-<div>
-    <h2>User Information</h2>
-    <img src="{{ avatar }}" alt="">
-    <p>Username: {{ username }}</p>
-    <p>Full name: {{ full_name }}</p>
-    <p>Status: {{ status }}</p>
-    <p>Rank: {{ rank }}</p>
-    <p>Phone: {{ phone_number }}</p>
-    <a href="{% url 'details' %}">Details</a>
-</div>
+	<div>
+		<h2>User Information</h2>
+		{% if avatar %}
+			<img src="{{ avatar }}" alt="" style="width:300px">
+		{% endif %}
+		<p>Username: {{ username }}</p>
+		<p>Full name: {{ full_name }}</p>
+		<p>Status: {{ status }}</p>
+		<p>Rank: {{ rank }}</p>
+		<p>Phone: {{ phone_number }}</p>
+		<a href="{% url 'details' %}">Details</a>
+	</div>
 
-<div>
-    <h2>Donation History</h2>
-</div>
+	<div>
+		<h2>Donation History</h2>
+		{% include 'components/donation_history.html' %}
+	</div>
 {% endblock %}

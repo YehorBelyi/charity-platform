@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from donations.models import Payment
 from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 
@@ -75,13 +77,17 @@ class UserProfileView(LoginRequiredMixin, View):
     login_url = 'login'
 
     def get(self, request):
+        current_user = request.user
+        history = Payment.objects.prefetch_related("user").filter(user=current_user).filter(is_finished=True)
+
         context = {
-            'username': request.user.username,
-            'full_name': f"{request.user.first_name} {request.user.last_name}",
-            'status': request.user.get_status_display(),
-            'rank': request.user.get_rank_display(),
-            'phone_number': request.user.phone_number,
-            'avatar' : request.user.avatar.url,
+            'username': current_user.username,
+            'full_name': f"{current_user.first_name} {current_user.last_name}",
+            'status': current_user.get_status_display(),
+            'rank': current_user.get_rank_display(),
+            'phone_number': current_user.phone_number,
+            'avatar' : current_user.avatar.url,
+            'history': history,
         }
         return render(request, self.template_name, context)
 
