@@ -64,7 +64,10 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-units.tests">units.tests module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-units.urls">units.urls module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-units.views">units.views module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-units.views">units.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#units.views.unit"><code class="docutils literal notranslate"><span class="pre">unit()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-units">Module contents</a></li>
 </ul>
 </li>
@@ -119,6 +122,7 @@
 </section>
 <section id="module-units.admin">
 <span id="units-admin-module"></span><h2>units.admin module<a class="headerlink" href="#module-units.admin" title="Link to this heading"></a></h2>
+<p>Admin interface registration for the units app.</p>
 </section>
 <section id="module-units.apps">
 <span id="units-apps-module"></span><h2>units.apps module<a class="headerlink" href="#module-units.apps" title="Link to this heading"></a></h2>
@@ -127,59 +131,51 @@
 <span id="units-models-module"></span><h2>units.models module<a class="headerlink" href="#module-units.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="units.models.Unit">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">units.models.</span></span><span class="sig-name descname"><span class="pre">Unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#units.models.Unit" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">units.models.</span></span><span class="sig-name descname"><span class="pre">Unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#units.models.Unit" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Represents a military or organizational unit.</p>
+<p>This model supports a hierarchical structure (tree) where units can have
+parent and child relationships (e.g., a Battalion belongs to a Brigade).</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.LEVEL_CHOICES">
 <span class="sig-name descname"><span class="pre">LEVEL_CHOICES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('agency',</span> <span class="pre">'Структура'),</span> <span class="pre">('branch',</span> <span class="pre">'Рід</span> <span class="pre">військ'),</span> <span class="pre">('corps',</span> <span class="pre">'Корпус'),</span> <span class="pre">('brigade',</span> <span class="pre">'Бригада'),</span> <span class="pre">('battalion',</span> <span class="pre">'Батальйон'),</span> <span class="pre">('special',</span> <span class="pre">'Спецпідрозділ')]</span></span><a class="headerlink" href="#units.models.Unit.LEVEL_CHOICES" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Choices for the organizational level of the unit.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.name">
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#units.models.Unit.name" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Full name of the unit.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.logo">
 <span class="sig-name descname"><span class="pre">logo</span></span><a class="headerlink" href="#units.models.Unit.logo" title="Link to this definition"></a></dt>
-<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
-assigning the width/height to the width_field/height_field, if appropriate.</p>
+<dd><p>Official logo or emblem of the unit.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.short_description">
 <span class="sig-name descname"><span class="pre">short_description</span></span><a class="headerlink" href="#units.models.Unit.short_description" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Brief summary for previews (max 300 characters).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.description">
 <span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#units.models.Unit.description" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Detailed historical or operational description.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.parent">
 <span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#units.models.Unit.parent" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>Self-referential foreign key to create a hierarchy.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="units.models.Unit.level">
 <span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#units.models.Unit.level" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>The category or depth level in the organizational tree.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -227,9 +223,33 @@ object the first time, the query is executed.</p>
 </section>
 <section id="module-units.urls">
 <span id="units-urls-module"></span><h2>units.urls module<a class="headerlink" href="#module-units.urls" title="Link to this heading"></a></h2>
+<p>URL configuration for the units application.</p>
+<p>Defines routes for viewing individual unit details and their organizational data.</p>
 </section>
 <section id="module-units.views">
 <span id="units-views-module"></span><h2>units.views module<a class="headerlink" href="#module-units.views" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="units.views.unit">
+<span class="sig-prename descclassname"><span class="pre">units.views.</span></span><span class="sig-name descname"><span class="pre">unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#units.views.unit" title="Link to this definition"></a></dt>
+<dd><p>Display details of a specific unit and its hierarchical path.</p>
+<p>This view fetches the unit by ID and reconstructs the full path from the
+top-level parent down to the current unit for navigation purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>HttpRequest</em>) – The incoming request.</p></li>
+<li><p><strong>unit_id</strong> (<em>int</em>) – The primary key of the unit to display.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rendered unit detail page with hierarchy context.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-units">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-units" title="Link to this heading"></a></h2>
