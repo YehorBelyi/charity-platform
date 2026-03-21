@@ -53,7 +53,7 @@ class SignUpView(View):
 
     def post(self, request):
         """Create a new user instance and log them in upon success."""
-        form = UserSignUpForm(request.POST)
+        form = UserSignUpForm(request.POST, request.FILES)
 
         context = {
             'form': form,
@@ -98,27 +98,31 @@ class UserProfileView(LoginRequiredMixin, View):
             'status': current_user.get_status_display(),
             'rank': current_user.get_rank_display(),
             'phone_number': current_user.phone_number,
-            'avatar' : current_user.avatar.url,
+            'avatar' : current_user.avatar.url if current_user.avatar else None,
             'history': history,
+            'short_bio': current_user.short_bio,
         }
         return render(request, self.template_name, context)
 
 
 class UserDetailsView(LoginRequiredMixin, View):
+    """Displays the user's profile full details."""
     template_name = 'users/details.html'
     login_url = 'login'
 
     def get(self, request):
+        """Get user profile details."""
         form = UserUpdateForm(instance=request.user)
         context = {'form': form}
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = UserUpdateForm(request.POST, instance=request.user)
+        """Update user profile details."""
+        form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             form.save()
-            return redirect('details')
+            return redirect('profile')
 
         context = {'form': form}
         return render(request, self.template_name, context)
