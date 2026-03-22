@@ -20,18 +20,28 @@ class UserSignUpForm(forms.ModelForm):
     """Form for registering a new CustomUser with detailed profile data."""
     email = forms.EmailField(validators=[email_validator])
     password = forms.CharField(widget=forms.PasswordInput)
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+    )
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "status", "rank", "email", "password", "date_of_birth",
-                  "phone_number"]
+        fields = ["username", "first_name", "last_name", "status", "rank",
+                  "email", "password", "date_of_birth", "phone_number", "short_bio"]
+        widgets = {
+            'short_bio': forms.Textarea(attrs={'rows': 4}),
+        }
 
 
 class UserUpdateForm(forms.ModelForm):
     """Form for users to update their personal profile information."""
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+    )
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number"]
+        fields = ["avatar", "username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number", "short_bio"]
+        widgets = {
+            'short_bio': forms.Textarea(attrs={'rows': 4}),
+        }

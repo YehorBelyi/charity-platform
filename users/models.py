@@ -29,7 +29,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to="profile_pictures/", null=True, blank=True)
 
     #: User's date of birth.
-    date_of_birth = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    date_of_birth = models.DateField(default=timezone.now, blank=True, null=True)
 
     #: Contact phone number.
     phone_number = models.CharField(max_length=20, null=True, blank=True)
@@ -39,6 +39,9 @@ class CustomUser(AbstractUser):
 
     #: Military or organizational rank.
     rank = models.CharField(max_length=30, choices=RANK_CHOICES, null=True, blank=False, default='none')
+
+    #: Short information about user.
+    short_bio = models.CharField(max_length=200, null=True)
 
     def is_verified(self):
         """
