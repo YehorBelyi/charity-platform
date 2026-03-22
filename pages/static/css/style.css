@@ -1,4 +1,4 @@
-/* --- БАЗОВІ НАЛАШТУВАННЯ --- */
+/* -------- BASE --------- */
 body {
     font-family: "Roboto", sans-serif;
     background-color: #ffffff !important; /* Весь сайт білий */
@@ -9,12 +9,13 @@ body {
 }
 
 .container {
-    max-width: 375px; /* Для мобільної версії */
+    max-width: 375px; 
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* --- ХЕДЕР (Білий) --- */
+
+/* ----------- HEADER ---------- */
 .page-header {
     background-color: #ffffff;
     border-bottom: 1px solid #eeeeee;
@@ -41,12 +42,11 @@ body {
     padding: 0;
 }
 
-/* Стиль іконки бургер (дві лінії) */
 .burger-icon {
     stroke: #0c0c0c;
 }
 
-/* --- МОБІЛЬНЕ МЕНЮ (Темне) --- */
+/* --- МОБІЛЬНЕ МЕНЮ  --- */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -144,6 +144,269 @@ body {
     padding: 0;
     margin-top: 20px;
 }
+
+
+
+
+/* ----------------------- Announcments list -------------- */
+
+
+
+
+.announcement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 20px 0;
+}
+
+.announcement-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s ease;
+}
+
+.announcement-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.announcement-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.announcement-content {
+    padding: 20px;
+}
+
+.announcement-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #0c0c0c;
+}
+
+.announcement-author {
+    font-size: 14px;
+    color: #3350e9;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.btn-donate {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #3350e9;
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-top: 15px;
+    text-decoration: none !important;
+    border: none !important; 
+    outline: none;
+    cursor: pointer;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 150ms ease;
+}
+
+.btn-donate:hover, 
+.btn-donate:focus {
+    background-color: #2541b2; /* Темніший синій */
+}
+
+.btn-donate:active {
+    transform: scale(0.98);
+}
+
+
+
+
+/* --------------------- PROGRESSBAR ----------------------- */
+
+
+
+
+
+.progress-container {
+    margin: 15px 0;
+}
+
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2ecc71, #27ae60); 
+    border-radius: 10px;
+    transition: width 500ms ease-in-out;
+}
+
+.progress-fill.red {
+    background: linear-gradient(90deg, #ff4d4d, #e74c3c);
+}
+
+.progress-fill.orange {
+    background: linear-gradient(90deg, #ff9f43, #e67e22);
+}
+
+.progress-fill.yellow {
+    background: linear-gradient(90deg, #f1c40f, #f39c12);
+}
+
+.progress-fill.green {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.target-amount {
+    color: rgba(12, 12, 12, 0.5);
+}
+
+.raised-amount {
+    color: #0c0c0c;
+    font-weight: 700;
+}
+
+.raised-amount-large {
+    color: #0c0c0c;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* ----------- ANNOUNCMENT INFO ---------------*/
+
+.detail-info-block {
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+.detail-label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgba(12, 12, 12, 0.4);
+    display: block;
+    margin-top: 15px;
+}
+
+.announcement-detail-header {
+    margin-bottom: 16px;
+}
+
+.unit-badge {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+    padding: 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+}
+
+.unit-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.unit-link {
+    font-weight: 600;
+    color: #3350e9;
+    text-decoration: none;
+}
+
+.search-form-section {
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.search-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.search-form-wrapper {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.empty-results {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.empty-results-text {
+    color: rgba(12, 12, 12, 0.4);
+}
+
+.pagination-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-list {
+    display: flex;
+    gap: 5px;
+    list-style: none;
+}
+
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f0f0f0;
+    color: #0c0c0c;
+    text-decoration: none;
+}
+
+.pagination-link.active {
+    background: #3350e9;
+    color: #ffffff;
+}
+
+.placeholder-box {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.creation-date {
+    font-size: 14px;
+    color: rgba(12, 12, 12, 0.5);
+}
+
+/* ------------------------- FOOTER ------------------- */
 
 
 .footer {
