@@ -55,14 +55,23 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.admin">fundraisers.admin module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.apps">fundraisers.apps module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.forms">fundraisers.forms module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.forms">fundraisers.forms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fundraisers.forms.AddFundraisingAnnouncementForm"><code class="docutils literal notranslate"><span class="pre">AddFundraisingAnnouncementForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fundraisers.forms.SearchForm"><code class="docutils literal notranslate"><span class="pre">SearchForm</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.models">fundraisers.models module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#fundraisers.models.FundraisingAnnouncement"><code class="docutils literal notranslate"><span class="pre">FundraisingAnnouncement</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.tests">fundraisers.tests module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.urls">fundraisers.urls module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.views">fundraisers.views module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fundraisers.views">fundraisers.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fundraisers.views.fundraising_announcement"><code class="docutils literal notranslate"><span class="pre">fundraising_announcement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fundraisers.views.CreateAnnouncementView"><code class="docutils literal notranslate"><span class="pre">CreateAnnouncementView</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fundraisers.views.AnnouncementsView"><code class="docutils literal notranslate"><span class="pre">AnnouncementsView</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-fundraisers">Module contents</a></li>
 </ul>
 </li>
@@ -122,99 +131,160 @@
 </section>
 <section id="module-fundraisers.admin">
 <span id="fundraisers-admin-module"></span><h2>fundraisers.admin module<a class="headerlink" href="#module-fundraisers.admin" title="Link to this heading"></a></h2>
+<p>Django admin configuration for the fundraisers application.</p>
+<p>Registers models in the admin interface to allow staff users
+to view and manage fundraisers records.</p>
 </section>
 <section id="module-fundraisers.apps">
 <span id="fundraisers-apps-module"></span><h2>fundraisers.apps module<a class="headerlink" href="#module-fundraisers.apps" title="Link to this heading"></a></h2>
 </section>
 <section id="module-fundraisers.forms">
 <span id="fundraisers-forms-module"></span><h2>fundraisers.forms module<a class="headerlink" href="#module-fundraisers.forms" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.forms.</span></span><span class="sig-name descname"><span class="pre">AddFundraisingAnnouncementForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Form for creating announcements.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.title" title="Link to this definition"></a></dt>
+<dd><p>Announcement title.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.target_sum">
+<span class="sig-name descname"><span class="pre">target_sum</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.target_sum" title="Link to this definition"></a></dt>
+<dd><p>Amount needed to reach the fundraising goal.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.description" title="Link to this definition"></a></dt>
+<dd><p>Main information about announcement.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.photo">
+<span class="sig-name descname"><span class="pre">photo</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.photo" title="Link to this definition"></a></dt>
+<dd><p>Photo representing the announcement.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.operational_direction">
+<span class="sig-name descname"><span class="pre">operational_direction</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.operational_direction" title="Link to this definition"></a></dt>
+<dd><p>The operational direction where the supported unit is deployed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.unit">
+<span class="sig-name descname"><span class="pre">unit</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.unit" title="Link to this definition"></a></dt>
+<dd><p>Supported unit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'description':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'operational_direction':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'photo':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'target_sum':</span> <span class="pre">&lt;django.forms.fields.DecimalField</span> <span class="pre">object&gt;,</span> <span class="pre">'title':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'unit':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;}</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.AddFundraisingAnnouncementForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'description':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'operational_direction':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'photo':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'target_sum':</span> <span class="pre">&lt;django.forms.fields.DecimalField</span> <span class="pre">object&gt;,</span> <span class="pre">'title':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'unit':</span> <span class="pre">&lt;django.forms.models.ModelChoiceField</span> <span class="pre">object&gt;}</span></span><a class="headerlink" href="#fundraisers.forms.AddFundraisingAnnouncementForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fundraisers.forms.SearchForm">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.forms.</span></span><span class="sig-name descname"><span class="pre">SearchForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.forms.SearchForm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<p>Form for searching announcements.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.SearchForm.search">
+<span class="sig-name descname"><span class="pre">search</span></span><a class="headerlink" href="#fundraisers.forms.SearchForm.search" title="Link to this definition"></a></dt>
+<dd><p>Search query.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.SearchForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'search':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></span><a class="headerlink" href="#fundraisers.forms.SearchForm.base_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.forms.SearchForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'search':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></span><a class="headerlink" href="#fundraisers.forms.SearchForm.declared_fields" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-fundraisers.models">
 <span id="fundraisers-models-module"></span><h2>fundraisers.models module<a class="headerlink" href="#module-fundraisers.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.models.</span></span><span class="sig-name descname"><span class="pre">FundraisingAnnouncement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">author</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_sum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operational_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_closed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.models.</span></span><span class="sig-name descname"><span class="pre">FundraisingAnnouncement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Represents a fundraising announcement.</p>
+<p>Stores information about a fundraising campaign, including title, author,
+target and current amounts, description, optional photo, related unit,
+and status (open or closed).</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.title">
 <span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.title" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Announcement title.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.author">
 <span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.author" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>User that created this announcement.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.current_sum">
 <span class="sig-name descname"><span class="pre">current_sum</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.current_sum" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Amount of money already collected.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.target_sum">
 <span class="sig-name descname"><span class="pre">target_sum</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.target_sum" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Amount of money needed to reach the fundraising goal.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.description">
 <span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.description" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Main information about the announcement.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.photo">
 <span class="sig-name descname"><span class="pre">photo</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.photo" title="Link to this definition"></a></dt>
-<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
-assigning the width/height to the width_field/height_field, if appropriate.</p>
+<dd><p>Photo representing the announcement.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.operational_direction">
 <span class="sig-name descname"><span class="pre">operational_direction</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.operational_direction" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>The operational direction where the supported unit is deployed.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.unit">
 <span class="sig-name descname"><span class="pre">unit</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.unit" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p>Foreign key to supported unit.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.is_closed">
 <span class="sig-name descname"><span class="pre">is_closed</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.is_closed" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Indicates whether the announcement is closed or open for donations.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="fundraisers.models.FundraisingAnnouncement.date">
 <span class="sig-name descname"><span class="pre">date</span></span><a class="headerlink" href="#fundraisers.models.FundraisingAnnouncement.date" title="Link to this definition"></a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p>Date when the announcement was created.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -247,9 +317,99 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </section>
 <section id="module-fundraisers.urls">
 <span id="fundraisers-urls-module"></span><h2>fundraisers.urls module<a class="headerlink" href="#module-fundraisers.urls" title="Link to this heading"></a></h2>
+<p>URL configuration for the fundraisers application.</p>
+<p>This module defines view routes for:
+- Announcement page.
+- Page for creating announcements.
+- Page with all announcements.</p>
 </section>
 <section id="module-fundraisers.views">
 <span id="fundraisers-views-module"></span><h2>fundraisers.views module<a class="headerlink" href="#module-fundraisers.views" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="fundraisers.views.fundraising_announcement">
+<span class="sig-prename descclassname"><span class="pre">fundraisers.views.</span></span><span class="sig-name descname"><span class="pre">fundraising_announcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">announcement_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.fundraising_announcement" title="Link to this definition"></a></dt>
+<dd><p>Get requested announcement and render corresponding template.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.views.</span></span><span class="sig-name descname"><span class="pre">CreateAnnouncementView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateView</span></code></p>
+<p>Handle form for creating a new fundraising announcement.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fundraisers/create_announcement.html'</span></span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.model" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#fundraisers.models.FundraisingAnnouncement" title="fundraisers.models.FundraisingAnnouncement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FundraisingAnnouncement</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.form_class">
+<span class="sig-name descname"><span class="pre">form_class</span></span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.form_class" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#fundraisers.forms.AddFundraisingAnnouncementForm" title="fundraisers.forms.AddFundraisingAnnouncementForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">AddFundraisingAnnouncementForm</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.success_url">
+<span class="sig-name descname"><span class="pre">success_url</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/'</span></span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.success_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.login_url">
+<span class="sig-name descname"><span class="pre">login_url</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/users/login/'</span></span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.login_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fundraisers.views.CreateAnnouncementView.form_valid">
+<span class="sig-name descname"><span class="pre">form_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">form</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.CreateAnnouncementView.form_valid" title="Link to this definition"></a></dt>
+<dd><p>Set current user as the author of the form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fundraisers.views.</span></span><span class="sig-name descname"><span class="pre">AnnouncementsView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.AnnouncementsView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ListView</span></code></p>
+<p>Display list of announcements.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fundraisers/announcements.html'</span></span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.template_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.queryset">
+<span class="sig-name descname"><span class="pre">queryset</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QuerySet</span> <span class="pre">[&lt;FundraisingAnnouncement:</span> <span class="pre">asd&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">55555&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">fff&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">tgergt&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">ПВІПВІП&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">QQQQQQQ&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">das&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">ZBIR&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">1&gt;,</span> <span class="pre">&lt;FundraisingAnnouncement:</span> <span class="pre">каів&gt;]&gt;</span></span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.queryset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.paginate_by">
+<span class="sig-name descname"><span class="pre">paginate_by</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.paginate_by" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'-date'</span></span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.ordering" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.get_context_data" title="Link to this definition"></a></dt>
+<dd><p>Add SearchForm to the context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fundraisers.views.AnnouncementsView.get_queryset">
+<span class="sig-name descname"><span class="pre">get_queryset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fundraisers.views.AnnouncementsView.get_queryset" title="Link to this definition"></a></dt>
+<dd><p>Filter queryset by user search request.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-fundraisers">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-fundraisers" title="Link to this heading"></a></h2>

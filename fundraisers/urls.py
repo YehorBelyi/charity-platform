@@ -1,3 +1,12 @@
+"""
+URL configuration for the fundraisers application.
+
+This module defines view routes for:
+- Announcement page.
+- Page for creating announcements.
+- Page with all announcements.
+"""
+
 from django.urls import path
 from . import views
 

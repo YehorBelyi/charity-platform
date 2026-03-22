@@ -6,6 +6,7 @@ from .forms import AddFundraisingAnnouncementForm, SearchForm
 
 
 def fundraising_announcement(request, announcement_id):
+    """Get requested announcement and render corresponding template."""
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
 
     context = {
@@ -15,31 +16,33 @@ def fundraising_announcement(request, announcement_id):
 
 
 class CreateAnnouncementView(LoginRequiredMixin, CreateView):
+    """Handle form for creating a new fundraising announcement."""
     template_name = "fundraisers/create_announcement.html"
     model = FundraisingAnnouncement
     form_class = AddFundraisingAnnouncementForm
     success_url = "/"
     login_url = "/users/login/"
 
-    # add user to the form
     def form_valid(self, form):
+        """Set current user as the author of the form."""
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 
 class AnnouncementsView(ListView):
+    """Display list of announcements."""
     template_name = "fundraisers/announcements.html"
     queryset = FundraisingAnnouncement.objects.all()
     paginate_by = 15
     ordering = "-date"
 
-    # add SearchForm to the context
     def get_context_data(self, **kwargs):
+        """Add SearchForm to the context."""
         context = super().get_context_data(**kwargs)
         context["form"] = SearchForm(self.request.GET)
         return context
 
-    # filter queryset by user search request
     def get_queryset(self):
+        """Filter queryset by user search request."""
         queryset = super().get_queryset()
         return queryset.filter(title__icontains=self.request.GET.get("search") or "")
