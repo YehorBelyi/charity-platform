@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, View
 from .models import FundraisingAnnouncement
 from .forms import AddFundraisingAnnouncementForm, SearchForm
 
@@ -46,3 +46,12 @@ class AnnouncementsView(ListView):
         """Filter queryset by user search request."""
         queryset = super().get_queryset()
         return queryset.filter(title__icontains=self.request.GET.get("search") or "")
+
+class UserAnnouncementsPartialView(LoginRequiredMixin, ListView):
+    """Display current users list of announcements."""
+    model = FundraisingAnnouncement
+    template_name = 'components/user_announcements.html'
+    context_object_name = "announcements"
+
+    def get_queryset(self):
+        return FundraisingAnnouncement.objects.filter(author=self.request.user).order_by("-date")

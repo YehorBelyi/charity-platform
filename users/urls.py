@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from users.views import LoginView, SignUpView, UserDetailsView, LogoutView, UserProfileView
+from users.views import LoginView, SignUpView, LogoutView, UserProfileView, UserProfileEditView
 
 """
 URL routing for user-related actions.
@@ -16,7 +16,7 @@ urlpatterns = [
     #: Public or personal profile view.
     path('profile/', UserProfileView.as_view(), name='profile'),
     #: Settings page for updating account details.
-    path('details/', UserDetailsView.as_view(), name='details'),
+    path('edit/', UserProfileEditView.as_view(), name='edit_profile'),
     #: Logout action.
     path('logout/', LogoutView.as_view(), name='logout'),
 ]

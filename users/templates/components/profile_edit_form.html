@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+
+<form
+    hx-post="{% url 'edit_profile' %}"
+    hx-target="#profile-content"
+    hx-swap="innerHTML"
+    enctype="multipart/form-data"
+>
+    {% csrf_token %}
+
+	{% crispy form %}
+
+    <button type="submit" class="btn btn-primary w-100">
+        Зберегти
+    </button>
+</form>

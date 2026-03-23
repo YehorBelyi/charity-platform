@@ -1,0 +1,36 @@
+<div class="header my-3">
+	<h1>Ваш профіль</h1>
+</div>
+<div class="">
+	<div class="profile-section" style="display: flex">
+		<div class="profile-picture">
+			{% if avatar %}
+				<img src="{{ avatar }}" alt="avatar">
+			{% else %}
+				<div class="no-avatar">No avatar</div>
+			{% endif %}
+		</div>
+		<div class="profile-info p-3">
+			<div class="profile-info-text">
+				<p><span class="badge text-bg-primary">Ім'я та прізвище</span> {{ full_name }}</p>
+				<p><span class="badge text-bg-primary">Користувацьке ім'я:</span> {{ username }}</p>
+				{#			<p>Status: {{ status }}</p>#}
+				{#			<p>Rank: {{ rank }}</p>#}
+				{#			<p>Phone: {{ phone_number }}</p>#}
+				{#			<p>Short bio:<br>{{ short_bio }}</p>#}
+			</div>
+			<div class="profile-edit-button">
+				<button
+					class="btn btn-warning"
+					hx-get="{% url 'edit_profile' %}"
+					hx-target="#modal-body"
+					hx-trigger="click"
+					data-bs-toggle="modal"
+					data-bs-target="#profileModal">
+					Редагувати
+				</button>
+			</div>
+		</div>
+	</div>
+
+</div>

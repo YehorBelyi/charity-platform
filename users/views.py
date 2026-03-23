@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -90,7 +91,6 @@ class UserProfileView(LoginRequiredMixin, View):
             history: Prefetched list of successful payments.
         """
         current_user = request.user
-        history = Payment.objects.prefetch_related("user").filter(user=current_user).filter(is_finished=True)
 
         context = {
             'username': current_user.username,
@@ -98,17 +98,15 @@ class UserProfileView(LoginRequiredMixin, View):
             'status': current_user.get_status_display(),
             'rank': current_user.get_rank_display(),
             'phone_number': current_user.phone_number,
-            'avatar' : current_user.avatar.url if current_user.avatar else None,
-            'history': history,
+            'avatar': current_user.avatar.url if current_user.avatar else None,
             'short_bio': current_user.short_bio,
         }
         return render(request, self.template_name, context)
 
 
-class UserDetailsView(LoginRequiredMixin, View):
+class UserProfileEditView(LoginRequiredMixin, View):
     """Displays the user's profile full details."""
-    template_name = 'users/details.html'
-    login_url = 'login'
+    template_name = 'components/profile_edit_form.html'
 
     def get(self, request):
         """Get user profile details."""
@@ -118,14 +116,28 @@ class UserDetailsView(LoginRequiredMixin, View):
 
     def post(self, request):
         """Update user profile details."""
-        form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
 
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
+        def post(self, request):
+            form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
 
-        context = {'form': form}
-        return render(request, self.template_name, context)
+            if form.is_valid():
+                form.save()
 
+                request.user.refresh_from_db()
 
+                context = {
+                    'username': request.user.username,
+                    'full_name': f"{request.user.first_name or ''} {request.user.last_name or ''}".strip(),
+                    'status': request.user.get_status_display(),
+                    'rank': request.user.get_rank_display(),
+                    'phone_number': request.user.phone_number,
+                    'avatar': request.user.avatar.url if request.user.avatar else None,
+                    'short_bio': request.user.short_bio,
+                }
 
+                response = HttpResponse(request, 'components/user_profile.html', context)
+                response['HX-Trigger'] = 'profileUpdated'
+                return response
+
+            print(form.errors)
+            return render(request, self.template_name, {'form': form})

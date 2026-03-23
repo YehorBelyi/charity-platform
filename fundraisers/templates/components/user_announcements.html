@@ -1,0 +1,30 @@
+<div class="announcement-list">
+    {% for ann in announcements %}
+        <div class="announcement-card">
+
+            <div class="announcement-image-wrapper">
+                {% if ann.photo %}
+                    <img src="{{ ann.photo.url }}" class="announcement-image" alt="{{ ann.title }}">
+                {% else %}
+                    <div class="placeholder-box">
+                        <span>Немає фото</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="announcement-info d-flex justify-content-between align-items-center" style="width: 100%;">
+
+                <div class="announcement-info-text mx-3">
+                    <h3>{{ ann.title }}</h3>
+                </div>
+
+                <div class="announcement-controls d-flex flex-column gap-2 px-3">
+                    <a href="" class="btn btn-warning">Редагувати</a>
+                    <a href="" class="btn btn-danger">Видалити</a>
+                </div>
+
+            </div>
+
+        </div>
+    {% endfor %}
+</div>

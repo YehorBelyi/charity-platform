@@ -9,7 +9,8 @@ This module defines view routes for:\n
 
 from django.contrib import admin
 from django.urls import path
-from .views import SuccessfulPaymentView, CanceledPaymentView, SetPaymentView, CreateCheckoutSessionView
+from .views import SuccessfulPaymentView, CanceledPaymentView, SetPaymentView, CreateCheckoutSessionView, \
+    DonationHistoryPartialView
 from .webhooks import stripe_webhook_view
 
 urlpatterns = [
@@ -23,5 +24,7 @@ urlpatterns = [
     path('create/<int:announcement_id>', SetPaymentView.as_view(), name='payment-set'),
     #: Action endpoint to create a Stripe Checkout Session.
     path('create-checkout-session/<int:announcement_id>', CreateCheckoutSessionView.as_view(),
-         name='create-checkout-session')
+         name='create-checkout-session'),
+    #: Partial view for donation history.
+    path('history/', DonationHistoryPartialView.as_view(), name='donation-history'),
 ]
