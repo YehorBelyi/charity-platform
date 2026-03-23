@@ -1,0 +1,23 @@
+<div class="user-nav">
+	<button
+		class="btn btn-secondary"
+		hx-get="{% url 'fundraisers:user_announcements' %}"
+		hx-target="#user-content"
+		hx-swap="innerHTML">
+		Мої збори
+	</button>
+
+	<button
+		class="btn btn-secondary"
+		hx-get="{% url 'donation-history' %}"
+		hx-target="#user-content"
+		hx-swap="innerHTML">
+		Історія донатів
+	</button>
+</div>
+
+<div id="user-content"
+	 hx-get="{% url 'fundraisers:user_announcements' %}"
+	 hx-trigger="load"
+	 hx-swap="innerHTML">
+</div>

@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import View
@@ -61,3 +62,15 @@ class CreateCheckoutSessionView(View):
             logging.error(f"Payment error: {e}")
             request.session['payment_error'] = str(e)
             return redirect('payment-canceled')
+
+class DonationHistoryPartialView(LoginRequiredMixin, View):
+    template_name = 'components/donation_history.html'
+
+    def get(self, request, *args, **kwargs):
+        current_user = request.user
+        history = Payment.objects.prefetch_related("user").filter(user=current_user).filter(is_finished=True)
+
+        context = {
+            'history': history,
+        }
+        return render(request, self.template_name, context)

@@ -35,13 +35,15 @@ class UserSignUpForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     """Form for users to update their personal profile information."""
-    date_of_birth = forms.DateField(
-        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
-    )
+    # date_of_birth = forms.DateField(
+    #     widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+    # )
 
     class Meta:
         model = CustomUser
-        fields = ["avatar", "username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number", "short_bio"]
+        # fields = ["avatar", "username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number", "short_bio"]
+        fields = ["avatar", "first_name", "last_name"]
         widgets = {
+
             'short_bio': forms.Textarea(attrs={'rows': 4}),
         }
