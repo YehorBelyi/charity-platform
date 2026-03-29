@@ -3,73 +3,44 @@
 {% load crispy_forms_tags %}
 
 {% block container %}
-<div class="container page-bottom-space">
-    <div class="search-form-section">
-        <h1 class="search-title">Усі збори</h1>
-        <div class="search-form-wrapper">
-            {% crispy form %}
-        </div>
-    </div>
+	<div class="container page-bottom-space">
+		<div class="search-form-section">
+			<h1 class="search-title">Усі збори</h1>
+			<div class="search-form-wrapper">
+				{% crispy form %}
+			</div>
+		</div>
 
-    {% if not object_list %}
-        <div class="empty-results">
-            <h2 class="empty-results-text">За Вашим запитом нічого не знайдено</h2>
-        </div>
-    {% endif %}
+		{% if not object_list %}
+			<div class="empty-results">
+				<h2 class="empty-results-text">За Вашим запитом нічого не знайдено</h2>
+			</div>
+		{% endif %}
 
-    <div class="announcement-list">
-        {% for announcement in object_list %}
-        <div class="announcement-card">
-            <div class="announcement-image-wrapper">
-                {% if announcement.photo %}
-                    <img src="{{ announcement.photo.url }}" class="announcement-image" alt="{{ announcement.title }}">
-                {% else %}
-                    <div class="placeholder-box"></div>
-                {% endif %}
-            </div>
-            
-            <div class="announcement-content">
-                <a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}" class="card-link">
-                    <h2 class="announcement-title">{{ announcement.title }}</h2>
-                </a>
-                
-                <div class="progress-container">
-                {% widthratio announcement.current_sum announcement.target_sum 100 as percentage %}
-                <div class="progress-track track-tall">
-                    <div class="progress-fill 
-                        {% if percentage|add:0 < 25 %}red
-                        {% elif percentage|add:0 < 50 %}orange
-                        {% elif percentage|add:0 < 75 %}yellow
-                        {% else %}green{% endif %}" 
-                        style="width: {{ percentage }}%">
-                    </div>
-                </div>
-                    <div class="progress-stats">
-                        <span class="raised-amount">{{ announcement.current_sum }} грн</span>
-                        <span class="target-amount">мета {{ announcement.target_sum }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+		<div class="announcement-list">
+			{% for announcement in object_list %}
+				{% include 'components/announcement_card.html' %}
+			{% endfor %}
+		</div>
 
-    {% if is_paginated %}
-    <nav class="pagination-container">
-        <ul class="pagination-list">
-            <li class="page-item">
-                <a class="pagination-link" href="{% if page_obj.has_previous %}{{request.path}}?page={{page_obj.previous_page_number}}{% if request.GET.search %}&search={{request.GET.search}}{% endif %}{% endif %}">&laquo;</a>
-            </li>
+		{% if is_paginated %}
+			<nav class="pagination-container">
+				<ul class="pagination-list">
+					<li class="page-item">
+						<a class="pagination-link" href="{% if page_obj.has_previous %}{{ request.path }}?page=
+							{{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% endif %}">&laquo;</a>
+					</li>
 
-            <li class="page-item">
-                <a class="pagination-link active" href="#">{{ page_obj.number }}</a>
-            </li>
+					<li class="page-item">
+						<a class="pagination-link active" href="#">{{ page_obj.number }}</a>
+					</li>
 
-            <li class="page-item">
-                <a class="pagination-link" href="{% if page_obj.has_next %}{{request.path}}?page={{page_obj.next_page_number}}{% if request.GET.search %}&search={{request.GET.search}}{% endif %}{% endif %}">&raquo;</a>
-            </li>
-        </ul>
-    </nav>
-    {% endif %}
-</div>
+					<li class="page-item">
+						<a class="pagination-link" href="{% if page_obj.has_next %}{{ request.path }}?page=
+							{{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% endif %}">&raquo;</a>
+					</li>
+				</ul>
+			</nav>
+		{% endif %}
+	</div>
 {% endblock %}

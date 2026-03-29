@@ -1,0 +1,32 @@
+<div class="announcement-card">
+	<div class="announcement-image-wrapper">
+		{% if announcement.photo %}
+			<img src="{{ announcement.photo.url }}" class="announcement-image" alt="{{ announcement.title }}">
+		{% else %}
+			<div class="placeholder-box"></div>
+		{% endif %}
+	</div>
+
+	<div class="announcement-content">
+		<a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}" class="card-link">
+			<h2 class="announcement-title">{{ announcement.title }}</h2>
+		</a>
+
+		<div class="progress-container">
+			{% widthratio announcement.current_sum announcement.target_sum 100 as percentage %}
+			<div class="progress-track track-tall">
+				<div class="progress-fill
+                        {% if percentage|add:0 < 25 %}red
+                        {% elif percentage|add:0 < 50 %}orange
+                        {% elif percentage|add:0 < 75 %}yellow
+                        {% else %}green{% endif %}"
+					 style="width: {{ percentage }}%">
+				</div>
+			</div>
+			<div class="progress-stats">
+				<span class="raised-amount">{{ announcement.current_sum }} грн</span>
+				<span class="target-amount">мета {{ announcement.target_sum }}</span>
+			</div>
+		</div>
+	</div>
+</div>
