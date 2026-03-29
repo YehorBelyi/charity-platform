@@ -20,21 +20,17 @@
     <main class="main-content">
         {% block container %}
         <section class="hero">
-            <div class="container">
+            <div class="container hero-flex-container">
                 <div class="hero-container">
-                    <div class="hero-title-text">
-                        <h1 class="hero-title">Допомагати легко: ваша <span class="hero-title-collection">підтримка</span> змінює життя</h1>
-                        <p class="hero-text">ШАГ — це платформа, де кожен внесок наближає нас до великої мети. Створюйте власні збори або підтримуйте ініціативи інших. Разом ми можемо більше.</p>
-                    </div>   
+                    <h1 class="hero-title">Допомагати легко: ваша <span class="hero-title-collection">підтримка</span> змінює життя</h1>
+                    <p class="hero-text">ШАГ — це платформа, де кожен внесок наближає нас до великої мети. Створюйте власні збори або підтримуйте ініціативи інших. Разом ми можемо більше.</p> 
                 </div>                
                 
-                <picture class="hero-watch">
-                    <img 
-                        src="{% static 'images/hero-main.jpg' %}" 
-                        alt="Головне зображення збору" 
-                        class="hero-main-photo"
-                    >
-                </picture> 
+                <img 
+                    src="{% static 'images/hero-main.jpg' %}" 
+                    alt="Головне зображення збору" 
+                    class="hero-main-photo"
+                >
             </div>
         </section>
         {% endblock %}
