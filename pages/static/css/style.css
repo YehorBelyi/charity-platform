@@ -789,6 +789,72 @@ body {
     white-space: nowrap;
     margin: 0;
   }
+
+/* ---------- Announcments list -------- */
+
+ .page-bottom-space .container {
+    max-width: 704px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .announcement-list {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+    gap: 16px;
+    padding: 40px 0;
+    width: 100%;
+  }
+
+  .announcement-card {
+    flex-basis: calc((100% - 16px) / 2);
+    max-width: calc((100% - 16px) / 2);
+    min-height: 414px;
+    margin: 0;
+    background: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  .announcement-image-wrapper {
+    width: auto;
+    height: 250px;
+    margin: 24px 32px 10px 32px;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .announcement-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .announcement-content {
+    padding: 0 32px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .announcement-title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px;
+  }
+
+  .progress-container {
+    margin-top: auto;
+  }
+
+
 }
 
 /* -------- CONTACT -------- */
