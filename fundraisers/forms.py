@@ -4,7 +4,7 @@ from django import forms
 from units.models import Unit
 from .models import FundraisingAnnouncement
 
-class AddFundraisingAnnouncementForm(forms.ModelForm):
+class AddUpdateFundraisingAnnouncementForm(forms.ModelForm):
     """Form for creating announcements."""
 
     #: Announcement title.
@@ -34,7 +34,7 @@ class AddFundraisingAnnouncementForm(forms.ModelForm):
             Field("unit"),
             Field("operational_direction"),
             Field("photo"),
-            Submit("submit", "Створити збір")
+            Submit("submit", "Відправити")
         )
 
     class Meta:

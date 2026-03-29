@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="announcement-controls d-flex flex-column gap-2 px-3">
-                    <a href="" class="btn btn-warning">Редагувати</a>
+                    <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="btn btn-warning">Редагувати</a>
                     <a href="" class="btn btn-danger">Видалити</a>
                 </div>
 

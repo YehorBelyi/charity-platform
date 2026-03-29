@@ -17,4 +17,5 @@ urlpatterns = [
     path("create", views.CreateAnnouncementView.as_view(), name="create_announcement"),
     path("announcements", views.AnnouncementsView.as_view(), name="announcements"),
     path("list", views.UserAnnouncementsPartialView.as_view(), name="user_announcements"),
+    path("update/<int:announcement_id>", views.update_announcement, name="update_announcement"),
 ]
