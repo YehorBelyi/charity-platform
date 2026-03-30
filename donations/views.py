@@ -1,8 +1,12 @@
+"""
+This module contains the
+views for the donations app.
+"""
+
 import logging
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
 from django.views.generic import View
 
 from donations.models import Payment
@@ -58,12 +62,15 @@ class CreateCheckoutSessionView(View):
             checkout_session = create_checkout_session(announcement=announcement, amount=float(amount))
             return redirect(checkout_session.url)
         except Exception as e:
-            print(e)
             logging.error(f"Payment error: {e}")
             request.session['payment_error'] = str(e)
             return redirect('payment-canceled')
 
 class DonationHistoryPartialView(LoginRequiredMixin, View):
+    '''
+    This class handles requests
+    for partial template view.
+    '''
     template_name = 'components/donation_history.html'
 
     def get(self, request, *args, **kwargs):

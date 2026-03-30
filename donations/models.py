@@ -1,6 +1,12 @@
-from users.models import CustomUser
-from django.db import models
+"""
+This module contains all models
+required for donation system.
+"""
+
 import datetime
+from django.db import models
+from users.models import CustomUser
+
 
 # Create your models here.
 class Payment(models.Model):
@@ -12,7 +18,8 @@ class Payment(models.Model):
     """
 
     #: Reference to the related fundraising announcement.
-    announcement = models.ForeignKey('fundraisers.FundraisingAnnouncement', on_delete=models.CASCADE, related_name='payments')
+    announcement = models.ForeignKey('fundraisers.FundraisingAnnouncement',
+                                     on_delete=models.CASCADE, related_name='payments')
     #: The user who made the payment. Can be null for anonymous donations.
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     #: The amount of money donated (supports up to 10 digits, 2 decimal places).

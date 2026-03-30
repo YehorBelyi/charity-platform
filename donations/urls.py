@@ -7,10 +7,10 @@ This module defines view routes for:\n
 - Donation session creation and forms.
 """
 
-from django.contrib import admin
 from django.urls import path
-from .views import SuccessfulPaymentView, CanceledPaymentView, SetPaymentView, CreateCheckoutSessionView, \
-    DonationHistoryPartialView
+from .views import (SuccessfulPaymentView, CanceledPaymentView,
+                    SetPaymentView, CreateCheckoutSessionView, \
+    DonationHistoryPartialView)
 from .webhooks import stripe_webhook_view
 
 urlpatterns = [
