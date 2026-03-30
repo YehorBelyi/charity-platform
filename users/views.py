@@ -116,28 +116,26 @@ class UserProfileEditView(LoginRequiredMixin, View):
 
     def post(self, request):
         """Update user profile details."""
+        form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
 
-        def post(self, request):
-            form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
 
-            if form.is_valid():
-                form.save()
+            request.user.refresh_from_db()
 
-                request.user.refresh_from_db()
+            context = {
+                'username': request.user.username,
+                'full_name': f"{request.user.first_name or ''} {request.user.last_name or ''}".strip(),
+                'status': request.user.get_status_display(),
+                'rank': request.user.get_rank_display(),
+                'phone_number': request.user.phone_number,
+                'avatar': request.user.avatar.url if request.user.avatar else None,
+                'short_bio': request.user.short_bio,
+            }
 
-                context = {
-                    'username': request.user.username,
-                    'full_name': f"{request.user.first_name or ''} {request.user.last_name or ''}".strip(),
-                    'status': request.user.get_status_display(),
-                    'rank': request.user.get_rank_display(),
-                    'phone_number': request.user.phone_number,
-                    'avatar': request.user.avatar.url if request.user.avatar else None,
-                    'short_bio': request.user.short_bio,
-                }
+            response = HttpResponse(request, 'components/user_profile.html', context)
+            response['HX-Trigger'] = 'profileUpdated'
+            return response
 
-                response = HttpResponse(request, 'components/user_profile.html', context)
-                response['HX-Trigger'] = 'profileUpdated'
-                return response
-
-            print(form.errors)
-            return render(request, self.template_name, {'form': form})
+        print(form.errors)
+        return render(request, self.template_name, {'form': form})

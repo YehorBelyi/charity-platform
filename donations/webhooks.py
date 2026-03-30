@@ -1,10 +1,16 @@
+"""
+This module contains webhooks,
+which handles all payment processes
+on the website.
+"""
+
 import stripe
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from django.conf import settings
 from fundraisers.models import FundraisingAnnouncement
 from .models import Payment
-from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 webhook_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -26,15 +32,14 @@ def stripe_webhook_view(request):
     """
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
-    event = None
 
     try:
         event = stripe.Webhook.construct_event(
             payload, sig_header, webhook_secret
         )
-    except ValueError as e:
+    except ValueError:
         return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
+    except stripe.error.SignatureVerificationError:
         return HttpResponse(status=400)
 
     if event["type"] == "checkout.session.completed":
