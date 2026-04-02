@@ -1,3 +1,7 @@
+"""
+Admin interface for users and their profile information.
+"""
+
 from django.contrib import admin
 from users.models import CustomUser
 

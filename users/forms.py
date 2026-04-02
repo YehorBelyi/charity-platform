@@ -1,3 +1,7 @@
+"""
+Module for forms related to users and their profile information.
+"""
+
 from django import forms
 from django.core.validators import RegexValidator
 
@@ -26,8 +30,8 @@ class UserSignUpForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "last_name", "status", "rank",
-                  "email", "password", "date_of_birth", "phone_number", "short_bio"]
+        fields = ["username", "first_name", "last_name",
+                  "email", "password", "phone_number"]
         widgets = {
             'short_bio': forms.Textarea(attrs={'rows': 4}),
         }
@@ -41,7 +45,9 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        # fields = ["avatar", "username", "first_name", "last_name", "status", "rank", "email", "date_of_birth", "phone_number", "short_bio"]
+        # fields = ["avatar", "username", "first_name",
+        # "last_name", "status", "rank", "email",
+        # "date_of_birth", "phone_number", "short_bio"]
         fields = ["avatar", "first_name", "last_name"]
         widgets = {
 

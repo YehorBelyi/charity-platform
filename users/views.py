@@ -1,10 +1,12 @@
+"""
+Views for users and their profile information.
+"""
+
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from donations.models import Payment
 from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 
@@ -46,6 +48,7 @@ class SignUpView(View):
     template_name = 'users/signup.html'
 
     def get(self, request):
+        """Display the sign up form."""
         form = UserSignUpForm(request.GET or None)
         context = {
             'form': form,
@@ -61,6 +64,7 @@ class SignUpView(View):
         }
 
         if form.is_valid():
+            # form.add_error(None, 'Wrong username or password!')
             user = form.save(commit=False)
             user.set_password(form.cleaned_data.get("password"))
             user.save()
@@ -71,9 +75,13 @@ class SignUpView(View):
 
 
 class LogoutView(View):
+    """
+    Class for logout
+    """
     template_name = 'pages/index.html'
 
     def post(self, request):
+        """Logout user and redirect to home page."""
         logout(request)
         return render(request, self.template_name)
 
@@ -125,7 +133,8 @@ class UserProfileEditView(LoginRequiredMixin, View):
 
             context = {
                 'username': request.user.username,
-                'full_name': f"{request.user.first_name or ''} {request.user.last_name or ''}".strip(),
+                'full_name': f"{request.user.first_name or ''} "
+                             f"{request.user.last_name or ''}".strip(),
                 'status': request.user.get_status_display(),
                 'rank': request.user.get_rank_display(),
                 'phone_number': request.user.phone_number,
