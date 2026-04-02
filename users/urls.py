@@ -1,13 +1,13 @@
-from django.contrib import admin
-from django.urls import path
-from users.views import LoginView, SignUpView, LogoutView, UserProfileView, UserProfileEditView
-
 """
 URL routing for user-related actions.
 
-Includes paths for authentication (login/logout/signup) and 
+Includes paths for authentication (login/logout/signup) and
 profile management (details/profile views).
 """
+from django.urls import path
+from users.views import LoginView, SignUpView, LogoutView, UserProfileView, UserProfileEditView
+
+
 urlpatterns = [
     #: Login page.
     path('login/', LoginView.as_view(), name='login'),

@@ -1,3 +1,8 @@
+"""
+This module contains all models
+required for  authentication.
+"""
+
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -35,10 +40,14 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
 
     #: Social status of the user (e.g., Civilian, Volunteer).
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, null=True, blank=False, default='none')
+    status = models.CharField(max_length=20,
+                              choices=STATUS_CHOICES,
+                              null=True, blank=False, default='none')
 
     #: Military or organizational rank.
-    rank = models.CharField(max_length=30, choices=RANK_CHOICES, null=True, blank=False, default='none')
+    rank = models.CharField(max_length=30,
+                            choices=RANK_CHOICES,
+                            null=True, blank=False, default='none')
 
     #: Short information about user.
     short_bio = models.CharField(max_length=200, null=True)
@@ -56,4 +65,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
