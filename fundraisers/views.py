@@ -1,3 +1,5 @@
+"""Django views for fundraisers app"""
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
@@ -71,14 +73,14 @@ def update_announcement(request, announcement_id):
         form = AddUpdateFundraisingAnnouncementForm(instance=announcement)
         return render(request, "fundraisers/create_update_announcement.html", {"form": form})
 
-    elif request.method == "POST":
-        form = AddUpdateFundraisingAnnouncementForm(request.POST, request.FILES, instance=announcement)
+    if request.method == "POST":
+        form = AddUpdateFundraisingAnnouncementForm(
+            request.POST, request.FILES, instance=announcement
+        )
 
         if form.is_valid():
             form.save()
             return render(request, "pages/success_alert.html", {"text": "Збір оновлено успішно"})
 
         return render(request, "fundraisers/create_update_announcement.html", {"form": form})
-
-
-
+    return HttpResponse(status=400)
