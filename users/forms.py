@@ -1,11 +1,15 @@
 """
 Module for forms related to users and their profile information.
 """
+from datetime import date
 
 from django import forms
 from django.core.validators import RegexValidator
 
 from users.models import CustomUser
+
+import re
+
 
 #: Regex validator for basic email format verification.
 email_validator = RegexValidator(
@@ -35,6 +39,30 @@ class UserSignUpForm(forms.ModelForm):
         widgets = {
             'short_bio': forms.Textarea(attrs={'rows': 4}),
         }
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+
+        if phone_number:
+            pattern = r'^\+380\d{9}$'
+            if not re.match(pattern, phone_number):
+                raise forms.ValidationError("Please enter a valid phone number.")
+
+        return phone_number
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError("Password must be at least 8 characters long.")
+        if not any(char.isdigit() for char in password):
+            raise forms.ValidationError("Password must contain at least one digit.")
+        return password
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth and date_of_birth > date.today():
+            raise forms.ValidationError("Date of birth cannot be in the future.")
+        return date_of_birth
 
 
 class UserUpdateForm(forms.ModelForm):
