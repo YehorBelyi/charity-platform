@@ -20,16 +20,16 @@ email_validator = RegexValidator(
 
 class UserLoginForm(forms.Form):
     """Standard form for user login credentials."""
-    username = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(), label="Нікнейм")
+    password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
 
 
 class UserSignUpForm(forms.ModelForm):
-    """Form for registering a new CustomUser with detailed profile data."""
-    email = forms.EmailField(validators=[email_validator])
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(label="Електронна пошта")
+    password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
     date_of_birth = forms.DateField(
-        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
+        widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+        label="Дата народження"
     )
 
     class Meta:
@@ -46,22 +46,22 @@ class UserSignUpForm(forms.ModelForm):
         if phone_number:
             pattern = r'^\+380\d{9}$'
             if not re.match(pattern, phone_number):
-                raise forms.ValidationError("Please enter a valid phone number.")
+                raise forms.ValidationError("Введіть правильний номер телефону.")
 
         return phone_number
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
         if len(password) < 8:
-            raise forms.ValidationError("Password must be at least 8 characters long.")
+            raise forms.ValidationError("Пароль має бути не менше 8 символів.")
         if not any(char.isdigit() for char in password):
-            raise forms.ValidationError("Password must contain at least one digit.")
+            raise forms.ValidationError("Пароль повинен містити принаймні 1 цифру.")
         return password
 
     def clean_date_of_birth(self):
         date_of_birth = self.cleaned_data.get('date_of_birth')
         if date_of_birth and date_of_birth > date.today():
-            raise forms.ValidationError("Date of birth cannot be in the future.")
+            raise forms.ValidationError("Дата народження не може бути у майбутньому")
         return date_of_birth
 
 
