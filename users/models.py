@@ -31,26 +31,32 @@ class CustomUser(AbstractUser):
     """
 
     #: Profile picture of the user.
-    avatar = models.ImageField(upload_to="profile_pictures/", null=True, blank=True)
+    avatar = models.ImageField(upload_to="profile_pictures/", null=True,
+                               blank=True, verbose_name='Аватарка')
 
     #: User's date of birth.
-    date_of_birth = models.DateField(default=timezone.now, blank=True, null=True)
+    date_of_birth = models.DateField(default=timezone.now, blank=True,
+                                     null=True, verbose_name="Дата народження")
 
     #: Contact phone number.
-    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True,
+                                    blank=True, verbose_name='Номер телефону')
 
     #: Social status of the user (e.g., Civilian, Volunteer).
     status = models.CharField(max_length=20,
                               choices=STATUS_CHOICES,
-                              null=True, blank=False, default='none')
+                              null=True, blank=False,
+                              default='none', verbose_name='Статус')
 
     #: Military or organizational rank.
     rank = models.CharField(max_length=30,
                             choices=RANK_CHOICES,
-                            null=True, blank=False, default='none')
+                            null=True, blank=False,
+                            default='none', verbose_name='Звання')
 
     #: Short information about user.
-    short_bio = models.CharField(max_length=200, null=True)
+    short_bio = models.CharField(max_length=200, null=True,
+                                 verbose_name='Короткий опис')
 
     def is_verified(self):
         """
