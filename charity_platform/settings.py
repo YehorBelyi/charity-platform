@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'users',
     'pages',
     'verifications',
-    'units'
+    'units',
+    'reports'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

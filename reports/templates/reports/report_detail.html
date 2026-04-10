@@ -1,0 +1,18 @@
+{% extends 'pages/index.html' %}
+
+{% block container %}
+    {% if report.photo %}
+        <img src="{{report.photo.url}}" alt="Фотозвіт" />
+    {% endif %}
+    <br>
+    {% if report.donation_document %}
+        <a href="{{report.donation_document.url}}" download>Завантажити документ</a>
+    {% endif %}
+    <br>
+    {{report.description}}
+    <br>
+    {{report.spent_sum}}
+    <br>
+    {{report.date}}
+
+{% endblock %}

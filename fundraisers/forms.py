@@ -1,3 +1,5 @@
+"""Forms for the fundraisers app"""
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Field, Submit, Layout
 from django import forms

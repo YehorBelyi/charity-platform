@@ -1,3 +1,5 @@
+"""Models that connect the fundraisers app to the database using Django ORM"""
+
 from django.db import models
 
 class FundraisingAnnouncement(models.Model):
