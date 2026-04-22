@@ -1,34 +1,35 @@
 {% extends 'pages/index.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Профіль{% endblock %}
 
 {% block container %}
-	<div class="profile-container" style="width: 1200px; height: auto; margin: auto; border: 2px solid black;">
+<section class="profile-page">
+    <div class="container">
+        <div class="profile-main-wrapper">
+            
+            <div class="profile-info-section" id="profile-content">
+                {% include 'components/user_profile.html' %}
+            </div>
 
-		<div id="profile-content">
-			{% include 'components/user_profile.html' %}
-		</div>
-	</div>
+            <div class="profile-nav-section">
+                {% include 'components/user_bar.html' %}
+            </div>
 
-	<div class="user-nav-container mt-3" style="width: 1200px; height: auto; margin: auto; border: 2px solid black;">
-		{% include 'components/user_bar.html' %}
-	</div>
+        </div>
+    </div>
+</section>
 
-
-	<div class="modal fade" id="profileModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<h5 class="modal-title">Редагувати профіль</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-
-				<div class="modal-body" id="modal-body">
-				</div>
-
-			</div>
-		</div>
-	</div>
+<div class="modal fade" id="profileModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">Редагувати профіль</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
