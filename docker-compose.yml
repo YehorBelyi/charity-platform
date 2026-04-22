@@ -8,11 +8,21 @@ services:
     env_file:
       - .env
     depends_on:
+      - db
       - stripe-cli
     command: >
       sh -c "python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
+
+  db:
+    container_name: "postgresql"
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    env_file: .env
 
   stripe-cli:
     image: stripe/stripe-cli:latest

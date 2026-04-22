@@ -1,12 +1,33 @@
 {% extends 'pages/index.html' %}
 {% load crispy_forms_tags %}
 
-{% block container %} <div class="main">
-        <h2>Registration Form</h2>
-        <form method="post" enctype="multipart/form-data" style="width: 600px">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+{% block container %}
+<div class="container login-container">
+
+    <div class="login-title text-center my-5">
+        <h1 class="no-wrap">
+            <span class="hero-title-collection">Реєстрація</span> на платформі
+        </h1>
     </div>
+
+
+    <form method="post" enctype="multipart/form-data" class="register-box mx-auto p-4">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+
+        <div class="d-flex justify-content-center mt-3">
+            <button type="submit" class="btn btn-primary px-5">
+                Зареєструватись
+            </button>
+        </div>
+    </form>
+
+
+    <p class="text-center mt-3">
+        Вже маєш акаунт?
+        <a href="{% url 'login' %}">Увійти</a>
+    </p>
+
+</div>
 {% endblock %}

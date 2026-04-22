@@ -20,8 +20,9 @@ email_validator = RegexValidator(
 
 class UserLoginForm(forms.Form):
     """Standard form for user login credentials."""
-    username = forms.CharField(widget=forms.TextInput(), label="Нікнейм")
-    password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'contact-input', 'placeholder':"Ім'я користувача"}), label="Нікнейм")
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'contact-input', 'placeholder':'Пароль'}), label="Пароль")
+
 
 
 class UserSignUpForm(forms.ModelForm):
