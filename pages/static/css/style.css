@@ -462,6 +462,28 @@ body {
 }
 
 /* ------------------------- profile ------------------- */
+.profile-info-section img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    display: block;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(51, 80, 233, 0.2);
+}
+
+.user-nav .btn,
+.profile-nav-section .btn-primary {
+    background-color: #3350e9;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.user-nav .btn:hover {
+    background-color: #2541b2;
+}
 
 .profile-page {
     padding: 20px 0 40px;
@@ -892,6 +914,12 @@ body {
     background-color: #ffffff;
     border-radius: 25px;
   }
+
+  .profile-info-section img {
+        width: 150px;
+        height: 150px;
+        margin: 0 0 20px 0;
+    }
 
   .profile-nav-section {
     flex: 1;
@@ -1355,7 +1383,7 @@ body {
 
   /*---------------------  ANNOUNCMENTS LIST ----------- */
 
-  .container.page-bottom-space,
+.container.page-bottom-space,
   .help-section .container,
   .recents .container {
     max-width: 1158px;
@@ -1419,7 +1447,6 @@ body {
     justify-content: space-between;
   }
 
-
   .announcement-title {
     font-size: 20px;
     font-weight: 600;
@@ -1437,42 +1464,73 @@ body {
   }
 
   .announcement-card-detail {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    column-gap: 60px;
+    align-items: start;
     width: 100%;
-    display: block;
-  }
-
-  .announcement-detail-header {
-    text-align: center;
-    width: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .announcement-content.no-padding-sides {
+    display: contents;
+  }
+
+  .announcement-detail-header {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: left;
+    margin: 40px 0 20px 0;
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
+  .progress-container {
+    grid-column: 1;
+    grid-row: 2;
     width: 100%;
-    padding: 0;
+    margin-bottom: 25px;
   }
 
   .form-margin {
-    display: flex;
-    justify-content: center;
+    grid-column: 1;
+    grid-row: 3;
+    display: block;
     width: 100%;
-    margin: 30px 0;
+    margin: 0;
   }
 
   .announcement-card-detail .btn-donate {
-    display: block;
-    margin: 0 auto;
+    margin: 0;
+    width: 280px;
+  }
+
+  .announcement-image-wrapper.detail-image-height {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    width: 100%;
+    height: 380px;
+    margin-top: 40px;
+    background-color: #ffffff;
+    border: 1px solid rgba(12, 12, 12, 0.05);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .detail-info-block {
+    grid-column: 1 / span 2;
     width: 100%;
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid #f0f0f0;
   }
 
   .detail-info-block .hero-text {
     width: 100%;
     max-width: 100%;
+    text-align: left;
+    line-height: 1.6;
   }
 
   /* ------------ CONTACT US --------------- */
@@ -1684,6 +1742,74 @@ body {
     padding: 25px;
     border-radius: 25px;
 }
+
+
+/* ------------------------ PROFILE ---------------------- */
+
+.profile-page {
+        padding: 80px 0;
+    }
+
+    .profile-page .container {
+        max-width: 1158px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .profile-main-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        max-width: 1158px;
+    }
+
+    .profile-info-section {
+        flex: 2; 
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .profile-nav-section {
+        flex: 1;
+        padding: 40px;
+        height: fit-content;
+    }
+
+    .profile-info-section img {
+        width: 180px; 
+        height: 180px;
+        margin-bottom: 30px;
+    }
+
+    .profile-nav-section a {
+        font-size: 18px;
+        padding: 12px 0;
+        transition: all 0.3s ease;
+    }
+
+    .profile-nav-section a:hover {
+        color: #3350e9;
+        transform: translateX(5px); 
+    }
+
+    .btn-blue-profile {
+        background-color: #3350e9;
+        border-radius: 15px;
+        padding: 15px 25px;
+        border: none;
+        color: white;
+        width: 100%;
+        display: block;
+        text-align: center;
+        margin-bottom: 15px;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn-blue-profile:hover {
+        background-color: #2541b2;
+        transform: translateY(-2px);
+    }
 
 
 
