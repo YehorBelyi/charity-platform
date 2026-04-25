@@ -1,17 +1,47 @@
-{% extends "pages/index.html" %}
-{% load crispy_forms_tags %}
+<div class="donation-sheet">
+    <p class="donation-sheet-eyebrow">Донат</p>
+    <h2 class="donation-sheet-title">{{ announcement.title }}</h2>
+    <p class="donation-sheet-text">
+        Вкажіть суму, яку хочете переказати. Після цього відкриється захищена сторінка оплати Stripe.
+    </p>
 
-{% block title %}Successful{% endblock %}
+    <form
+        method="post"
+        action="{% url 'create-checkout-session' announcement.id %}"
+        hx-post="{% url 'create-checkout-session' announcement.id %}"
+        hx-target="#donation-modal-body"
+        hx-swap="innerHTML"
+        class="donation-sheet-form">
+        {% csrf_token %}
 
-{% block container %}
-	<h1>{{ announcement.title }}</h1>
-	<form method="post" action="{% url 'create-checkout-session' announcement.id %}">
-		{% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="donation-sheet-errors">
+                {% for error in form.non_field_errors %}
+                    <p class="donation-sheet-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-		<input type="number" name="amount" step="1" min="1" placeholder="Сума донату" required>
+        <div class="donation-sheet-field">
+            <label class="donation-sheet-label" for="{{ form.amount.id_for_label }}">Сума донату</label>
+            {{ form.amount }}
+            {% if form.amount.errors %}
+                <div class="donation-sheet-errors">
+                    {% for error in form.amount.errors %}
+                        <p class="donation-sheet-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <p class="donation-sheet-hint">Мінімальна сума донату: 1 грн.</p>
+        </div>
 
-		<button type="submit">
-			Донат
-		</button>
-	</form>
-{% endblock %}
+        <div class="donation-sheet-note">
+            <span class="donation-sheet-note-label">Безпечна оплата</span>
+            <p class="donation-sheet-note-text">
+                Після підтвердження ви перейдете на сторінку Stripe. Платіж буде зараховано до цього збору після успішної оплати.
+            </p>
+        </div>
+
+        <button type="submit" class="donation-sheet-submit">Перейти до оплати</button>
+    </form>
+</div>

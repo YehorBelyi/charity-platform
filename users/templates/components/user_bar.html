@@ -1,23 +1,32 @@
-<div class="user-nav">
-	<button
-		class="btn btn-secondary"
-		hx-get="{% url 'fundraisers:user_announcements' %}"
-		hx-target="#user-content"
-		hx-swap="innerHTML">
-		Мої збори
-	</button>
+<div class="profile-dashboard">
+    <div class="profile-dashboard-header">
+        <p class="profile-dashboard-eyebrow">Активність</p>
+        <h2 class="profile-dashboard-title">Керуйте своїми зборами та переглядайте історію донатів.</h2>
+    </div>
 
-	<button
-		class="btn btn-secondary"
-		hx-get="{% url 'donation-history' %}"
-		hx-target="#user-content"
-		hx-swap="innerHTML">
-		Історія донатів
-	</button>
-</div>
+    <div class="user-nav profile-nav-buttons">
+        <button
+            class="profile-tab-button"
+            hx-get="{% url 'fundraisers:user_announcements' %}"
+            hx-target="#user-content"
+            hx-swap="innerHTML">
+            Мої збори
+        </button>
 
-<div id="user-content"
-	 hx-get="{% url 'fundraisers:user_announcements' %}"
-	 hx-trigger="load"
-	 hx-swap="innerHTML">
+        <button
+            class="profile-tab-button profile-tab-button-secondary"
+            hx-get="{% url 'donation-history' %}"
+            hx-target="#user-content"
+            hx-swap="innerHTML">
+            Історія донатів
+        </button>
+    </div>
+
+    <div
+        id="user-content"
+        class="profile-dashboard-content"
+        hx-get="{% url 'fundraisers:user_announcements' %}"
+        hx-trigger="load"
+        hx-swap="innerHTML">
+    </div>
 </div>

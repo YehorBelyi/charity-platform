@@ -5,34 +5,21 @@ views for the donations app.
 
 import logging
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 
+from .forms import DonationAmountForm
 from donations.models import Payment
 from fundraisers.models import FundraisingAnnouncement
 from .services import create_checkout_session
 
 
 # Create your views here.
-class SuccessfulPaymentView(View):
-    """View to display the success page after a completed transaction."""
-    template_name = 'donations/successful_payment.html'
-
-    def get(self, request):
-        """Render the success template."""
-        return render(request, self.template_name)
-
-class CanceledPaymentView(View):
-    """View to display the cancellation page if the user aborts the payment."""
-    template_name = 'donations/canceled_payment.html'
-
-    def get(self, request):
-        """Render the cancellation template."""
-        return render(request, self.template_name)
-
 class SetPaymentView(View):
-    """View to render the initial payment form for a specific announcement."""
+    """Render donation form content for the announcement modal."""
     template_name = 'donations/set_payment.html'
 
     def get(self, request, *args, **kwargs):
@@ -43,7 +30,13 @@ class SetPaymentView(View):
             announcement_id (int): Passed via URL to identify the fundraising target.
         """
         announcement = get_object_or_404(FundraisingAnnouncement, pk=kwargs.get('announcement_id'))
-        context = {'announcement': announcement}
+        if request.headers.get("HX-Request") != "true":
+            return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
+
+        context = {
+            'announcement': announcement,
+            'form': DonationAmountForm(),
+        }
         return render(request, self.template_name, context)
 
 class CreateCheckoutSessionView(View):
@@ -53,18 +46,56 @@ class CreateCheckoutSessionView(View):
         Process the donation amount and redirect to Stripe.
 
         Extracts the amount from the POST data and calls the checkout service.
-        In case of failure, logs the error and redirects to the canceled page.
+        In case of failure, logs the error and returns the form with errors.
         """
-        announcement=get_object_or_404(FundraisingAnnouncement, pk=kwargs.get('announcement_id'))
-        amount=request.POST.get('amount')
+        announcement = get_object_or_404(
+            FundraisingAnnouncement,
+            pk=kwargs.get('announcement_id')
+        )
+        form = DonationAmountForm(request.POST)
+        is_htmx = request.headers.get("HX-Request") == "true"
+
+        if not form.is_valid():
+            if is_htmx:
+                return render(
+                    request,
+                    "donations/set_payment.html",
+                    {"announcement": announcement, "form": form},
+                    status=400,
+                )
+
+            messages.error(request, "Вкажіть коректну суму донату.")
+            return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
+
+        amount = form.cleaned_data["amount"]
 
         try:
-            checkout_session = create_checkout_session(announcement=announcement, amount=float(amount))
+            checkout_session = create_checkout_session(
+                announcement=announcement,
+                amount=amount,
+                user=request.user if request.user.is_authenticated else None,
+            )
+
+            if is_htmx:
+                response = HttpResponse(status=204)
+                response["HX-Redirect"] = checkout_session.url
+                return response
+
             return redirect(checkout_session.url)
         except Exception as e:
             logging.error(f"Payment error: {e}")
-            request.session['payment_error'] = str(e)
-            return redirect('payment-canceled')
+            form.add_error(None, "Не вдалося підготувати оплату. Спробуйте ще раз.")
+
+            if is_htmx:
+                return render(
+                    request,
+                    "donations/set_payment.html",
+                    {"announcement": announcement, "form": form},
+                    status=400,
+                )
+
+            messages.error(request, "Не вдалося підготувати оплату. Спробуйте ще раз.")
+            return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
 
 class DonationHistoryPartialView(LoginRequiredMixin, View):
     '''

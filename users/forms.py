@@ -68,17 +68,38 @@ class UserSignUpForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     """Form for users to update their personal profile information."""
-    # date_of_birth = forms.DateField(
-    #     widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'})
-    # )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["avatar"].label = "Аватар"
+        self.fields["first_name"].label = "Ім'я"
+        self.fields["last_name"].label = "Прізвище"
+        self.fields["phone_number"].label = "Телефон"
+        self.fields["short_bio"].label = "Короткий опис"
 
     class Meta:
         model = CustomUser
-        # fields = ["avatar", "username", "first_name",
-        # "last_name", "status", "rank", "email",
-        # "date_of_birth", "phone_number", "short_bio"]
-        fields = ["avatar", "first_name", "last_name"]
+        fields = ["avatar", "first_name", "last_name", "phone_number", "short_bio"]
         widgets = {
-
-            'short_bio': forms.Textarea(attrs={'rows': 4}),
+            "avatar": forms.ClearableFileInput(attrs={"class": "profile-edit-file"}),
+            "first_name": forms.TextInput(attrs={"class": "profile-edit-input", "placeholder": "Ваше ім'я"}),
+            "last_name": forms.TextInput(attrs={"class": "profile-edit-input", "placeholder": "Ваше прізвище"}),
+            "phone_number": forms.TextInput(attrs={"class": "profile-edit-input", "placeholder": "+380XXXXXXXXX"}),
+            "short_bio": forms.Textarea(
+                attrs={
+                    "class": "profile-edit-textarea",
+                    "rows": 4,
+                    "placeholder": "Коротко розкажіть про себе",
+                }
+            ),
         }
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get("phone_number")
+
+        if phone_number:
+            pattern = r"^\+380\d{9}$"
+            if not re.match(pattern, phone_number):
+                raise forms.ValidationError("Введіть правильний номер телефону у форматі +380XXXXXXXXX.")
+
+        return phone_number

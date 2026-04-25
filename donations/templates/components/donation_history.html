@@ -1,14 +1,31 @@
-<div class="container border border-3 rounded">
-	<div class="row border m-2">
-		<div class="col">Оголошення</div>
-		<div class="col">Сума донату, грн</div>
-		<div class="col">Дата оплати</div>
-	</div>
-	{% for donation in history %}
-		<div class="row border m-2">
-			<div class="col">{{ donation.announcement.title }}</div>
-			<div class="col">{{ donation.amount }}</div>
-			<div class="col"> {{ donation.date }}</div>
-		</div>
-	{% endfor %}
+<div class="profile-panel">
+    <div class="profile-panel-header">
+        <div>
+            <p class="profile-panel-eyebrow">Донати</p>
+            <h3 class="profile-panel-title">Ваша історія донатів</h3>
+        </div>
+    </div>
+
+    {% if history %}
+        <div class="profile-donation-table">
+            <div class="profile-donation-row profile-donation-row-head">
+                <span>Збір</span>
+                <span>Сума</span>
+                <span>Дата</span>
+            </div>
+
+            {% for donation in history %}
+                <div class="profile-donation-row">
+                    <span class="profile-donation-title">{{ donation.announcement.title }}</span>
+                    <span>{{ donation.amount }}</span>
+                    <span>{{ donation.date }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="profile-empty-state">
+            <h4 class="profile-empty-title">Поки немає донатів</h4>
+            <p class="profile-empty-text">Завершені донати з’являться тут, щойно ви підтримаєте якийсь збір.</p>
+        </div>
+    {% endif %}
 </div>

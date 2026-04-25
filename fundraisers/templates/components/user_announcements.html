@@ -1,30 +1,53 @@
-<div class="announcement-list">
-    {% for ann in announcements %}
-        <div class="announcement-card">
-
-            <div class="announcement-image-wrapper">
-                {% if ann.photo %}
-                    <img src="{{ ann.photo.url }}" class="announcement-image" alt="{{ ann.title }}">
-                {% else %}
-                    <div class="placeholder-box">
-                        <span>Немає фото</span>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="announcement-info d-flex justify-content-between align-items-center" style="width: 100%;">
-
-                <div class="announcement-info-text mx-3">
-                    <h3>{{ ann.title }}</h3>
-                </div>
-
-                <div class="announcement-controls d-flex flex-column gap-2 px-3">
-                    <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="btn btn-warning">Редагувати</a>
-                    <a href="" class="btn btn-danger">Видалити</a>
-                </div>
-
-            </div>
-
+<div class="profile-panel">
+    <div class="profile-panel-header">
+        <div>
+            <p class="profile-panel-eyebrow">Збори</p>
+            <h3 class="profile-panel-title">Ваші кампанії зі збору коштів</h3>
         </div>
-    {% endfor %}
+    </div>
+
+    {% if announcements %}
+        <div class="profile-announcement-list">
+            {% for ann in announcements %}
+                <article class="profile-announcement-card">
+                    <div class="profile-announcement-image-wrap">
+                        {% if ann.photo %}
+                            <img src="{{ ann.photo.url }}" class="profile-announcement-image" alt="{{ ann.title }}">
+                        {% else %}
+                            <div class="profile-announcement-placeholder">Немає фото</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-announcement-body">
+                        <div class="profile-announcement-copy">
+                            <p class="profile-announcement-meta">
+                                {% if ann.unit %}{{ ann.unit }}{% else %}Підрозділ не вказано{% endif %}
+                                {% if ann.operational_direction %} · {{ ann.operational_direction }}{% endif %}
+                            </p>
+                            <h4 class="profile-announcement-title">{{ ann.title }}</h4>
+                            <div class="profile-announcement-stats">
+                                <span>Зібрано: {{ ann.current_sum }}</span>
+                                <span>Ціль: {{ ann.target_sum }}</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-announcement-actions">
+                            <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="profile-card-button">
+                                Редагувати
+                            </a>
+                            <form method="post" action="{% url 'fundraisers:delete_announcement' announcement_id=ann.id %}" onsubmit="return confirm('Видалити цей збір?');">
+                                {% csrf_token %}
+                                <button type="submit" class="profile-card-button profile-card-button-danger">Видалити</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="profile-empty-state">
+            <h4 class="profile-empty-title">Поки немає зборів</h4>
+            <p class="profile-empty-text">Створіть свій перший збір, щоб бачити його тут і керувати ним зі свого профілю.</p>
+        </div>
+    {% endif %}
 </div>

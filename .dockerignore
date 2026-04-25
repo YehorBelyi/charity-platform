@@ -6,3 +6,7 @@ __pycache__/
 *.pyc
 *.log
 tmp/
+.env
+.env.*
+.pytest_cache/
+media/

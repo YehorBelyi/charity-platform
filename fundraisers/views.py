@@ -1,20 +1,26 @@
 """Django views for fundraisers app"""
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, ListView
-from .models import FundraisingAnnouncement
+
 from .forms import AddUpdateFundraisingAnnouncementForm, SearchForm
+from .models import FundraisingAnnouncement
 
 
 def fundraising_announcement(request, announcement_id):
     """Get requested announcement and render corresponding template."""
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
+    payment_status = request.GET.get("payment_status")
+    payment_amount = request.GET.get("payment_amount")
 
     context = {
-        "announcement": announcement
+        "announcement": announcement,
+        "payment_status": payment_status,
+        "payment_amount": payment_amount,
     }
     return render(request, "fundraisers/announcement.html", context)
 
@@ -26,6 +32,20 @@ class CreateAnnouncementView(LoginRequiredMixin, CreateView):
     form_class = AddUpdateFundraisingAnnouncementForm
     success_url = "/"
     login_url = "/users/login/"
+
+    def dispatch(self, request, *args, **kwargs):
+        """Allow only verified users to create fundraisers."""
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if not request.user.is_verified():
+            messages.warning(
+                request,
+                "Щоб створити власний збір, спершу пройдіть верифікацію."
+            )
+            return redirect("verification_create")
+
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         """Set current user as the author of the form."""
@@ -51,10 +71,11 @@ class AnnouncementsView(ListView):
         queryset = super().get_queryset()
         return queryset.filter(title__icontains=self.request.GET.get("search") or "")
 
+
 class UserAnnouncementsPartialView(LoginRequiredMixin, ListView):
     """Display current users list of announcements."""
     model = FundraisingAnnouncement
-    template_name = 'components/user_announcements.html'
+    template_name = "components/user_announcements.html"
     context_object_name = "announcements"
 
     def get_queryset(self):
@@ -63,7 +84,7 @@ class UserAnnouncementsPartialView(LoginRequiredMixin, ListView):
 
 @login_required
 def update_announcement(request, announcement_id):
-    """Update selected announcement"""
+    """Update selected announcement."""
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
 
     if announcement.author != request.user:
@@ -83,4 +104,20 @@ def update_announcement(request, announcement_id):
             return render(request, "pages/success_alert.html", {"text": "Збір оновлено успішно"})
 
         return render(request, "fundraisers/create_update_announcement.html", {"form": form})
+
     return HttpResponse(status=400)
+
+
+@login_required
+def delete_announcement(request, announcement_id):
+    """Delete selected announcement owned by the current user."""
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
+
+    if announcement.author != request.user:
+        return HttpResponse(status=403)
+
+    announcement.delete()
+    return redirect("profile")

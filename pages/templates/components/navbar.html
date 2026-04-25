@@ -8,26 +8,56 @@
                     <a class="mobile-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
                        href="{% url 'home' %}">Головна</a>
                 </li>
-                <li class="header-item">
-                    <a class="mobile-link {% if request.resolver_match.view_name == 'fundraisers:announcements' %}active{% endif %}"
-                       href="{% url 'fundraisers:announcements' %}">Всі збори</a>
+                <li class="header-item dropdown">
+                    <button class="header-nav-toggle {% if request.resolver_match.view_name == 'fundraisers:announcements' or request.resolver_match.view_name == 'fundraisers:create_announcement' %}active{% endif %}"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Збори
+                        <span class="header-nav-caret">▾</span>
+                    </button>
+                    <ul class="dropdown-menu header-nav-dropdown">
+                        <li>
+                            <a class="dropdown-item header-nav-item {% if request.resolver_match.view_name == 'fundraisers:announcements' %}active{% endif %}"
+                               href="{% url 'fundraisers:announcements' %}">Всі збори</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item header-nav-item {% if request.resolver_match.view_name == 'fundraisers:create_announcement' %}active{% endif %}"
+                               href="{% url 'fundraisers:create_announcement' %}">Створити збір</a>
+                        </li>
+                    </ul>
                 </li>
+                {% if not user.is_authenticated %}
                 <li class="header-item">
-                    <a class="mobile-link {% if request.resolver_match.view_name == 'fundraisers:create_announcement' %}active{% endif %}"
-                       href="{% url 'fundraisers:create_announcement' %}">Створити збір</a>
-                </li>
-                {% if user.is_authenticated %}
-                <li class="header-item">
-                    <a class="mobile-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-                       href="{% url 'profile' %}">Профіль</a>
-                </li>
-                {% else %}
-                <li class="header-item">
-                    <a class="mobile-link" href="{% url 'login' %}">Вхід</a>
+                    <a class="mobile-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                       href="{% url 'login' %}">Вхід</a>
                 </li>
                 {% endif %}
             </ul>
-			<address class="header-address">
+
+            <address class="header-address">
+                {% if user.is_authenticated %}
+                <div class="header-user-menu dropdown">
+                    <button class="header-user-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="header-user-name">{{ user.username }}</span>
+                        <span class="header-user-caret">▾</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end header-user-dropdown">
+                        <li>
+                            <a class="dropdown-item header-user-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+                               href="{% url 'profile' %}">Профіль</a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}" class="header-user-form">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item header-user-item header-user-logout">Вийти</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+
                 <ul class="svg-list">
                     <li>
                         <a target="_blank" href="https://www.facebook.com/" class="svg-icons">
@@ -56,7 +86,6 @@
                 </ul>
             </address>
         </nav>
-		
 
         <button type="button" class="menu-btn" data-menu-open>
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +108,7 @@
                     <li class="mobile-list-item"><a class="mobile-link" href="{% url 'home' %}">Головна</a></li>
                     <li class="mobile-list-item"><a class="mobile-link" href="{% url 'fundraisers:announcements' %}">Всі збори</a></li>
                     <li class="mobile-list-item"><a class="mobile-link" href="{% url 'fundraisers:create_announcement' %}">Створити збір</a></li>
-					{% if not user.is_authenticated %}
+                    {% if not user.is_authenticated %}
                         <li class="mobile-list-item">
                             <a class="mobile-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
                                href="{% url 'login' %}">Вхід</a>
@@ -93,9 +122,14 @@
                             <a class="mobile-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
                                href="{% url 'profile' %}">Профіль</a>
                         </li>
+                        <li class="mobile-list-item">
+                            <form method="post" action="{% url 'logout' %}" class="mobile-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="mobile-link mobile-logout-button">Вийти</button>
+                            </form>
+                        </li>
                     {% endif %}
                 </ul>
-				
             </nav>
         </div>
     </div>
