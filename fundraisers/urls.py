@@ -23,4 +23,5 @@ urlpatterns = [
     path("list", views.UserAnnouncementsPartialView.as_view(), name="user_announcements"),
     path("update/<int:announcement_id>", views.update_announcement, name="update_announcement"),
     path("delete/<int:announcement_id>", views.delete_announcement, name="delete_announcement"),
+    path("close/<int:announcement_id>", views.close_announcement, name="close_announcement"),
 ]

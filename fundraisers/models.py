@@ -32,5 +32,15 @@ class FundraisingAnnouncement(models.Model):
     #: Date when the announcement was created.
     date = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def is_target_reached(self):
+        """Return whether the fundraising goal has been reached."""
+        return self.current_sum >= self.target_sum
+
+    @property
+    def can_be_closed(self):
+        """Return whether the announcement can be closed by the author."""
+        return self.is_target_reached and not self.is_closed
+
     def __str__(self):
         return self.title

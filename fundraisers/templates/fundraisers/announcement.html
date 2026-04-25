@@ -30,7 +30,7 @@
                     {% else %}
                         Ваш донат успішно оброблено.
                     {% endif %}
-                    Оновлення прогресу збору може з’явитися за мить після підтвердження Stripe.
+                    Оновлення прогресу збору може зʼявитися за мить після підтвердження Stripe.
                 </p>
             </div>
         {% elif payment_status == "canceled" %}
@@ -55,7 +55,22 @@
             </div>
 
             <div class="announcement-content no-padding-sides">
-                <h1 class="hero-title announcement-detail-header">{{ announcement.title }}</h1>
+                <div class="announcement-detail-heading">
+                    <div>
+                        <h1 class="hero-title announcement-detail-header">{{ announcement.title }}</h1>
+                        <div class="announcement-status-badges">
+                            {% if announcement.is_closed %}
+                                <span class="announcement-status-badge announcement-status-badge-closed">Збір закрито</span>
+                            {% else %}
+                                <span class="announcement-status-badge announcement-status-badge-open">Збір активний</span>
+                            {% endif %}
+
+                            {% if announcement.is_target_reached %}
+                                <span class="announcement-status-badge announcement-status-badge-goal">Ціль досягнуто</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
 
                 <div class="progress-container">
                     {% widthratio announcement.current_sum announcement.target_sum 100 as percentage %}
@@ -65,7 +80,7 @@
                             {% elif percentage|add:0 < 50 %}orange
                             {% elif percentage|add:0 < 75 %}yellow
                             {% else %}green{% endif %}"
-                            style="width: {{ percentage }}%">
+                            style="width: {% if percentage > 100 %}100{% else %}{{ percentage }}{% endif %}%">
                         </div>
                     </div>
                     <div class="progress-stats">
@@ -75,22 +90,92 @@
                 </div>
 
                 <div class="announcement-donation-cta form-margin">
-                    <p class="announcement-donation-eyebrow">Підтримайте збір</p>
-                    <p class="announcement-donation-text">
-                        Оберіть комфортну суму та перейдіть до безпечної оплати через Stripe без зайвих проміжних сторінок.
-                    </p>
+                    {% if announcement.is_closed %}
+                        <p class="announcement-donation-eyebrow">Збір завершено</p>
+                        <p class="announcement-donation-text">
+                            Автор закрив цей збір. Нові донати недоступні.
+                            {% if report %}
+                                Перегляньте опублікований звіт, щоб побачити результат збору.
+                            {% else %}
+                                Звіт буде доступний після його публікації.
+                            {% endif %}
+                        </p>
 
-                    <button
-                        type="button"
-                        class="btn-donate no-border"
-                        hx-get="{% url 'payment-set' announcement.pk %}"
-                        hx-target="#donation-modal-body"
-                        hx-swap="innerHTML"
-                        data-bs-toggle="modal"
-                        data-bs-target="#donationModal">
-                        Зробити донат
-                    </button>
+                        {% if report %}
+                            <a href="{% url 'reports:report' report.id %}" class="btn-donate">
+                                Переглянути звіт
+                            </a>
+                        {% elif user.is_authenticated and user == announcement.author %}
+                            <a href="{% url 'reports:create' announcement.id %}" class="btn-donate">
+                                Створити звіт
+                            </a>
+                        {% else %}
+                            <button type="button" class="btn-donate btn-donate-muted" disabled>
+                                Збір закрито
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <p class="announcement-donation-eyebrow">Підтримайте збір</p>
+                        <p class="announcement-donation-text">
+                            Оберіть комфортну суму та перейдіть до безпечної оплати через Stripe без зайвих проміжних сторінок.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn-donate no-border"
+                            hx-get="{% url 'payment-set' announcement.pk %}"
+                            hx-target="#donation-modal-body"
+                            hx-swap="innerHTML"
+                            data-bs-toggle="modal"
+                            data-bs-target="#donationModal">
+                            Зробити донат
+                        </button>
+                    {% endif %}
                 </div>
+
+                {% if user.is_authenticated and user == announcement.author %}
+                    <div class="announcement-owner-panel">
+                        <p class="announcement-owner-eyebrow">Керування збором</p>
+
+                        {% if announcement.can_be_closed %}
+                            <div class="announcement-owner-actions">
+                                <p class="announcement-owner-text">
+                                    Ціль уже досягнуто. Ви можете закрити збір і за бажанням опублікувати звіт.
+                                </p>
+                                <form method="post" action="{% url 'fundraisers:close_announcement' announcement.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="announcement-owner-button">
+                                        Закрити збір
+                                    </button>
+                                </form>
+                            </div>
+                        {% elif announcement.is_closed %}
+                            <div class="announcement-owner-actions">
+                                <p class="announcement-owner-text">
+                                    Збір уже закрито.
+                                    {% if report %}
+                                        Звіт опубліковано і доступний користувачам.
+                                    {% else %}
+                                        Ви ще можете додати звіт із підтвердними матеріалами.
+                                    {% endif %}
+                                </p>
+                                {% if report %}
+                                    <a href="{% url 'reports:report' report.id %}" class="announcement-owner-link">
+                                        Відкрити звіт
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'reports:create' announcement.id %}" class="announcement-owner-link">
+                                        Створити звіт
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <p class="announcement-owner-text">
+                                Закриття стане доступним, коли сума збору досягне цілі.
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
                 <div class="detail-info-block">
                     <span class="detail-label">Про збір</span>
