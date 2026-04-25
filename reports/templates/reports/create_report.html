@@ -1,6 +1,84 @@
 {% extends 'pages/index.html' %}
-{% load crispy_forms_tags %}
 
 {% block container %}
-{% crispy form %}
+<section class="report-page">
+    <div class="container report-container">
+        <div class="report-shell">
+            <div class="report-hero">
+                <p class="report-eyebrow">Звіт про закритий збір</p>
+                <h1 class="report-title">Підготуйте звіт для збору «{{ announcement.title }}»</h1>
+                <p class="report-text">
+                    Додайте короткий опис, суму фактичних витрат і, за можливості, документ або фото передачі.
+                </p>
+
+                <div class="report-summary-card">
+                    <div class="report-summary-item">
+                        <span class="report-summary-label">Зібрано</span>
+                        <strong class="report-summary-value">{{ announcement.current_sum }} грн</strong>
+                    </div>
+                    <div class="report-summary-item">
+                        <span class="report-summary-label">Ціль</span>
+                        <strong class="report-summary-value">{{ announcement.target_sum }} грн</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <form method="post" enctype="multipart/form-data" class="report-form">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="report-errors">
+                            {% for error in form.non_field_errors %}
+                                <p class="report-error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="report-form-grid">
+                        <div class="report-field report-field-wide">
+                            <label class="report-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% for error in form.description.errors %}
+                                <p class="report-error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="report-field">
+                            <label class="report-label" for="{{ form.spent_sum.id_for_label }}">{{ form.spent_sum.label }}</label>
+                            {{ form.spent_sum }}
+                            {% for error in form.spent_sum.errors %}
+                                <p class="report-error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="report-field">
+                            <label class="report-label" for="{{ form.photo.id_for_label }}">{{ form.photo.label }}</label>
+                            {{ form.photo }}
+                            {% for error in form.photo.errors %}
+                                <p class="report-error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="report-field report-field-wide">
+                            <label class="report-label" for="{{ form.donation_document.id_for_label }}">{{ form.donation_document.label }}</label>
+                            {{ form.donation_document }}
+                            <p class="report-hint">Підійде акт приймання-передачі або інший підтвердний документ.</p>
+                            {% for error in form.donation_document.errors %}
+                                <p class="report-error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="report-actions">
+                        <a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}" class="report-secondary-action">
+                            Повернутися до збору
+                        </a>
+                        <button type="submit" class="report-primary-action">Опублікувати звіт</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

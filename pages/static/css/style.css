@@ -1245,16 +1245,19 @@ body {
 
 .profile-announcement-actions {
     gap: 10px;
+    color: "white";
 }
 
 .profile-announcement-actions form {
     margin: 0;
     width: 100%;
+    color: "white";
 }
 
 .profile-announcement-actions .profile-card-button,
 .profile-announcement-actions .profile-card-button-danger {
     width: 100%;
+    color: "white";
 }
 
 .profile-donation-table {
@@ -3606,7 +3609,493 @@ body {
         transition: transform 0.2s, background-color 0.2s;
     }
 
-    .btn-blue-profile:hover {
+.btn-blue-profile:hover {
         background-color: #2541b2;
         transform: translateY(-2px);
     }
+
+.btn-donate-muted {
+    background: #a6afc7 !important;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.btn-donate-muted:hover,
+.btn-donate-muted:focus {
+    background: #a6afc7 !important;
+    transform: none;
+}
+
+.announcement-detail-heading {
+    display: grid;
+    gap: 12px;
+}
+
+.announcement-status-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.announcement-status-badge,
+.profile-announcement-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.announcement-status-badge-open,
+.profile-announcement-status-open {
+    background: rgba(51, 80, 233, 0.1);
+    color: #2742ba;
+}
+
+.announcement-status-badge-closed,
+.profile-announcement-status-closed {
+    background: rgba(15, 23, 42, 0.1);
+    color: #0f172a;
+}
+
+.announcement-status-badge-goal,
+.profile-announcement-status-goal {
+    background: rgba(46, 204, 113, 0.12);
+    color: #1c8d4b;
+}
+
+.profile-announcement-status-report {
+    background: rgba(255, 159, 67, 0.16);
+    color: #b35b00;
+}
+
+.announcement-owner-panel {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+    padding: 20px;
+    border: 1px solid rgba(12, 12, 12, 0.06);
+    border-radius: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+.announcement-owner-eyebrow {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #3350e9;
+}
+
+.announcement-owner-actions {
+    display: grid;
+    gap: 14px;
+}
+
+.announcement-owner-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(12, 12, 12, 0.62);
+}
+
+.announcement-owner-actions form {
+    margin: 0;
+}
+
+.announcement-owner-button,
+.announcement-owner-link,
+.profile-card-button-secondary,
+.report-primary-action,
+.report-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 18px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.announcement-owner-button,
+.announcement-owner-link,
+.report-primary-action {
+    border: none;
+    background: #3350e9;
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(51, 80, 233, 0.2);
+}
+
+.announcement-owner-button:hover,
+.announcement-owner-button:focus,
+.announcement-owner-link:hover,
+.announcement-owner-link:focus,
+.report-primary-action:hover,
+.report-primary-action:focus {
+    background: #2541b2;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.profile-card-button-secondary,
+.report-secondary-action {
+    border: 1px solid rgba(12, 12, 12, 0.1);
+    background: #ffffff;
+    color: #0c0c0c;
+}
+
+.profile-card-button-secondary:hover,
+.profile-card-button-secondary:focus,
+.report-secondary-action:hover,
+.report-secondary-action:focus {
+    border-color: rgba(51, 80, 233, 0.25);
+    color: #3350e9;
+    transform: translateY(-1px);
+}
+
+.profile-announcement-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.report-page {
+    padding: 32px 0 56px;
+    background: linear-gradient(180deg, #f6f8fc 0%, #ffffff 100%);
+}
+
+.report-container {
+    max-width: 375px;
+}
+
+.report-shell {
+    display: grid;
+    gap: 24px;
+}
+
+.report-hero,
+.report-card {
+    border-radius: 28px;
+    border: 1px solid rgba(12, 12, 12, 0.06);
+    background: #ffffff;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.08);
+}
+
+.report-hero {
+    display: grid;
+    gap: 16px;
+    padding: 24px 22px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    color: #ffffff;
+}
+
+.report-eyebrow {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.report-title {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
+
+.report-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.report-summary-card {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.report-summary-card-detail {
+    background: #f7f9ff;
+    border-color: rgba(51, 80, 233, 0.08);
+}
+
+.report-summary-item {
+    display: grid;
+    gap: 6px;
+}
+
+.report-summary-label,
+.report-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.report-summary-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.report-summary-card-detail .report-summary-label,
+.report-description-card .report-label,
+.report-media-card .report-label,
+.report-document-card .report-label,
+.report-field .report-label {
+    color: rgba(12, 12, 12, 0.48);
+}
+
+.report-summary-value {
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: inherit;
+}
+
+.report-card {
+    padding: 22px;
+}
+
+.report-form,
+.report-detail-grid,
+.report-detail-main,
+.report-aside {
+    display: grid;
+    gap: 18px;
+}
+
+.report-form-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.report-field {
+    display: grid;
+    gap: 8px;
+}
+
+.report-form-input,
+.report-form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(12, 12, 12, 0.1);
+    border-radius: 18px;
+    background: #f8faff;
+    color: #0c0c0c;
+}
+
+.report-form-input {
+    min-height: 54px;
+}
+
+.report-form-textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+.report-form-input:focus,
+.report-form-textarea:focus {
+    outline: none;
+    border-color: rgba(51, 80, 233, 0.45);
+    box-shadow: 0 0 0 4px rgba(51, 80, 233, 0.1);
+}
+
+.report-errors {
+    display: grid;
+    gap: 6px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(199, 61, 86, 0.08);
+    border: 1px solid rgba(199, 61, 86, 0.16);
+}
+
+.report-error {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a92d45;
+}
+
+.report-hint {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(12, 12, 12, 0.5);
+}
+
+.report-actions {
+    display: grid;
+    gap: 12px;
+}
+
+.report-description-card,
+.report-media-card,
+.report-document-card {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border-radius: 22px;
+    background: #f8faff;
+    border: 1px solid rgba(12, 12, 12, 0.06);
+}
+
+.report-description {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #314158;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.report-photo {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.report-document-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid rgba(12, 12, 12, 0.08);
+    color: #3350e9;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.report-document-link:hover,
+.report-document-link:focus {
+    border-color: rgba(51, 80, 233, 0.24);
+}
+
+.report-secondary-action-full {
+    width: 100%;
+}
+
+.report-page-detail .report-title,
+.report-page-detail .report-text {
+    max-width: none;
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .announcement-owner-actions {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+
+    .report-page {
+        padding: 48px 0 72px;
+    }
+
+    .report-container {
+        max-width: 704px;
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .report-hero {
+        padding: 32px;
+    }
+
+    .report-title {
+        font-size: 46px;
+    }
+
+    .report-summary-card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .report-card {
+        padding: 28px;
+    }
+
+    .report-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .report-field-wide {
+        grid-column: 1 / -1;
+    }
+
+    .report-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .announcement-detail-heading {
+        margin-top: 40px;
+    }
+
+    .announcement-owner-panel {
+        max-width: 640px;
+    }
+
+    .report-page {
+        padding: 72px 0 100px;
+    }
+
+    .report-container {
+        max-width: 1158px;
+        width: 100%;
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+
+    .report-shell {
+        gap: 28px;
+    }
+
+    .report-hero {
+        padding: 42px;
+        border-radius: 36px;
+    }
+
+    .report-title {
+        font-size: 58px;
+        max-width: 12ch;
+    }
+
+    .report-text {
+        font-size: 17px;
+        max-width: 62ch;
+    }
+
+    .report-card {
+        padding: 36px;
+        border-radius: 36px;
+    }
+
+    .report-detail-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+        align-items: start;
+    }
+
+    .report-aside {
+        position: sticky;
+        top: 110px;
+    }
+}

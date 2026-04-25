@@ -33,6 +33,14 @@ class SetPaymentView(View):
         if request.headers.get("HX-Request") != "true":
             return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
 
+        if announcement.is_closed:
+            return render(
+                request,
+                "donations/set_payment.html",
+                {"announcement": announcement, "form": None},
+                status=409,
+            )
+
         context = {
             'announcement': announcement,
             'form': DonationAmountForm(),
@@ -52,8 +60,20 @@ class CreateCheckoutSessionView(View):
             FundraisingAnnouncement,
             pk=kwargs.get('announcement_id')
         )
-        form = DonationAmountForm(request.POST)
         is_htmx = request.headers.get("HX-Request") == "true"
+
+        if announcement.is_closed:
+            if is_htmx:
+                return render(
+                    request,
+                    "donations/set_payment.html",
+                    {"announcement": announcement, "form": None},
+                    status=409,
+                )
+            messages.error(request, "Цей збір уже закрито для нових донатів.")
+            return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
+
+        form = DonationAmountForm(request.POST)
 
         if not form.is_valid():
             if is_htmx:

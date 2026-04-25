@@ -1,18 +1,59 @@
 {% extends 'pages/index.html' %}
 
 {% block container %}
-    {% if report.photo %}
-        <img src="{{report.photo.url}}" alt="Фотозвіт" />
-    {% endif %}
-    <br>
-    {% if report.donation_document %}
-        <a href="{{report.donation_document.url}}" download>Завантажити документ</a>
-    {% endif %}
-    <br>
-    {{report.description}}
-    <br>
-    {{report.spent_sum}}
-    <br>
-    {{report.date}}
+<section class="report-page report-page-detail">
+    <div class="container report-container">
+        <div class="report-shell">
+            <div class="report-hero">
+                <p class="report-eyebrow">Звіт опубліковано</p>
+                <h1 class="report-title">{{ report.fundraising_announcement.title }}</h1>
+                <p class="report-text">
+                    Автор закрив збір і поділився інформацією про використання зібраних коштів.
+                </p>
+            </div>
 
+            <div class="report-card report-detail-grid">
+                <div class="report-detail-main">
+                    <div class="report-summary-card report-summary-card-detail">
+                        <div class="report-summary-item">
+                            <span class="report-summary-label">Дата звіту</span>
+                            <strong class="report-summary-value">{{ report.date }}</strong>
+                        </div>
+                        <div class="report-summary-item">
+                            <span class="report-summary-label">Витрачено</span>
+                            <strong class="report-summary-value">{{ report.spent_sum }} грн</strong>
+                        </div>
+                    </div>
+
+                    <div class="report-description-card">
+                        <span class="report-label">Опис передачі</span>
+                        <p class="report-description">{{ report.description }}</p>
+                    </div>
+                </div>
+
+                <aside class="report-aside">
+                    {% if report.photo %}
+                        <div class="report-media-card">
+                            <span class="report-label">Фотозвіт</span>
+                            <img src="{{ report.photo.url }}" alt="Фотозвіт для {{ report.fundraising_announcement.title }}" class="report-photo">
+                        </div>
+                    {% endif %}
+
+                    {% if report.donation_document %}
+                        <div class="report-document-card">
+                            <span class="report-label">Документ</span>
+                            <a href="{{ report.donation_document.url }}" class="report-document-link" target="_blank" rel="noopener">
+                                Переглянути підтвердний документ
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <a href="{% url 'fundraisers:fundraising_announcement' report.fundraising_announcement.id %}" class="report-secondary-action report-secondary-action-full">
+                        Перейти до збору
+                    </a>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

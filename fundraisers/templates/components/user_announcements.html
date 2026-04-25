@@ -9,6 +9,7 @@
     {% if announcements %}
         <div class="profile-announcement-list">
             {% for ann in announcements %}
+                {% with report=ann.report_set.first %}
                 <article class="profile-announcement-card">
                     <div class="profile-announcement-image-wrap">
                         {% if ann.photo %}
@@ -29,12 +30,47 @@
                                 <span>Зібрано: {{ ann.current_sum }}</span>
                                 <span>Ціль: {{ ann.target_sum }}</span>
                             </div>
+                            <div class="profile-announcement-status-row">
+                                {% if ann.is_closed %}
+                                    <span class="profile-announcement-status profile-announcement-status-closed">Закрито</span>
+                                {% else %}
+                                    <span class="profile-announcement-status profile-announcement-status-open">Активний</span>
+                                {% endif %}
+
+                                {% if ann.is_target_reached %}
+                                    <span class="profile-announcement-status profile-announcement-status-goal">Ціль досягнуто</span>
+                                {% endif %}
+
+                                {% if report %}
+                                    <span class="profile-announcement-status profile-announcement-status-report">Є звіт</span>
+                                {% endif %}
+                            </div>
                         </div>
 
                         <div class="profile-announcement-actions">
-                            <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="profile-card-button">
-                                Редагувати
+                            <a href="{% url 'fundraisers:fundraising_announcement' announcement_id=ann.id %}" class="profile-card-button profile-card-button-secondary">
+                                Переглянути
                             </a>
+
+                            {% if ann.can_be_closed %}
+                                <form method="post" action="{% url 'fundraisers:close_announcement' announcement_id=ann.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="profile-card-button">Закрити збір</button>
+                                </form>
+                            {% elif ann.is_closed and report %}
+                                <a href="{% url 'reports:report' report_id=report.id %}" class="profile-card-button">
+                                    Відкрити звіт
+                                </a>
+                            {% elif ann.is_closed %}
+                                <a href="{% url 'reports:create' announcement_id=ann.id %}" class="profile-card-button">
+                                    Створити звіт
+                                </a>
+                            {% else %}
+                                <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="profile-card-button">
+                                    Редагувати
+                                </a>
+                            {% endif %}
+
                             <form method="post" action="{% url 'fundraisers:delete_announcement' announcement_id=ann.id %}" onsubmit="return confirm('Видалити цей збір?');">
                                 {% csrf_token %}
                                 <button type="submit" class="profile-card-button profile-card-button-danger">Видалити</button>
@@ -42,6 +78,7 @@
                         </div>
                     </div>
                 </article>
+                {% endwith %}
             {% endfor %}
         </div>
     {% else %}

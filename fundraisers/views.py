@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView, ListView
 
+from reports.models import Report
 from .forms import AddUpdateFundraisingAnnouncementForm, SearchForm
 from .models import FundraisingAnnouncement
 
@@ -16,11 +17,13 @@ def fundraising_announcement(request, announcement_id):
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
     payment_status = request.GET.get("payment_status")
     payment_amount = request.GET.get("payment_amount")
+    report = Report.objects.filter(fundraising_announcement=announcement).first()
 
     context = {
         "announcement": announcement,
         "payment_status": payment_status,
         "payment_amount": payment_amount,
+        "report": report,
     }
     return render(request, "fundraisers/announcement.html", context)
 
@@ -79,7 +82,11 @@ class UserAnnouncementsPartialView(LoginRequiredMixin, ListView):
     context_object_name = "announcements"
 
     def get_queryset(self):
-        return FundraisingAnnouncement.objects.filter(author=self.request.user).order_by("-date")
+        return (
+            FundraisingAnnouncement.objects.filter(author=self.request.user)
+            .prefetch_related("report_set")
+            .order_by("-date")
+        )
 
 
 @login_required
@@ -121,3 +128,28 @@ def delete_announcement(request, announcement_id):
 
     announcement.delete()
     return redirect("profile")
+
+
+@login_required
+def close_announcement(request, announcement_id):
+    """Close an announcement after the fundraising goal has been reached."""
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
+
+    if announcement.author != request.user:
+        return HttpResponse(status=403)
+
+    if announcement.is_closed:
+        messages.info(request, "Цей збір уже закрито.")
+        return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
+
+    if not announcement.is_target_reached:
+        messages.warning(request, "Закрити збір можна лише після досягнення цільової суми.")
+        return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)
+
+    announcement.is_closed = True
+    announcement.save(update_fields=["is_closed"])
+    messages.success(request, "Збір закрито. Тепер ви можете створити звіт за бажанням.")
+    return redirect("fundraisers:fundraising_announcement", announcement_id=announcement.id)

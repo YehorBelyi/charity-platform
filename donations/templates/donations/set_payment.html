@@ -1,47 +1,56 @@
 <div class="donation-sheet">
     <p class="donation-sheet-eyebrow">Донат</p>
     <h2 class="donation-sheet-title">{{ announcement.title }}</h2>
-    <p class="donation-sheet-text">
-        Вкажіть суму, яку хочете переказати. Після цього відкриється захищена сторінка оплати Stripe.
-    </p>
 
-    <form
-        method="post"
-        action="{% url 'create-checkout-session' announcement.id %}"
-        hx-post="{% url 'create-checkout-session' announcement.id %}"
-        hx-target="#donation-modal-body"
-        hx-swap="innerHTML"
-        class="donation-sheet-form">
-        {% csrf_token %}
+    {% if announcement.is_closed %}
+        <p class="donation-sheet-text">
+            Цей збір уже закрито. Нові донати недоступні.
+        </p>
+    {% else %}
+        <p class="donation-sheet-text">
+            Вкажіть суму, яку хочете переказати. Після цього відкриється захищена сторінка оплати Stripe.
+        </p>
+    {% endif %}
 
-        {% if form.non_field_errors %}
-            <div class="donation-sheet-errors">
-                {% for error in form.non_field_errors %}
-                    <p class="donation-sheet-error">{{ error }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
+    {% if form %}
+        <form
+            method="post"
+            action="{% url 'create-checkout-session' announcement.id %}"
+            hx-post="{% url 'create-checkout-session' announcement.id %}"
+            hx-target="#donation-modal-body"
+            hx-swap="innerHTML"
+            class="donation-sheet-form">
+            {% csrf_token %}
 
-        <div class="donation-sheet-field">
-            <label class="donation-sheet-label" for="{{ form.amount.id_for_label }}">Сума донату</label>
-            {{ form.amount }}
-            {% if form.amount.errors %}
+            {% if form.non_field_errors %}
                 <div class="donation-sheet-errors">
-                    {% for error in form.amount.errors %}
+                    {% for error in form.non_field_errors %}
                         <p class="donation-sheet-error">{{ error }}</p>
                     {% endfor %}
                 </div>
             {% endif %}
-            <p class="donation-sheet-hint">Мінімальна сума донату: 1 грн.</p>
-        </div>
 
-        <div class="donation-sheet-note">
-            <span class="donation-sheet-note-label">Безпечна оплата</span>
-            <p class="donation-sheet-note-text">
-                Після підтвердження ви перейдете на сторінку Stripe. Платіж буде зараховано до цього збору після успішної оплати.
-            </p>
-        </div>
+            <div class="donation-sheet-field">
+                <label class="donation-sheet-label" for="{{ form.amount.id_for_label }}">Сума донату</label>
+                {{ form.amount }}
+                {% if form.amount.errors %}
+                    <div class="donation-sheet-errors">
+                        {% for error in form.amount.errors %}
+                            <p class="donation-sheet-error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <p class="donation-sheet-hint">Мінімальна сума донату: 1 грн.</p>
+            </div>
 
-        <button type="submit" class="donation-sheet-submit">Перейти до оплати</button>
-    </form>
+            <div class="donation-sheet-note">
+                <span class="donation-sheet-note-label">Безпечна оплата</span>
+                <p class="donation-sheet-note-text">
+                    Після підтвердження ви перейдете на сторінку Stripe. Платіж буде зараховано до цього збору після успішної оплати.
+                </p>
+            </div>
+
+            <button type="submit" class="donation-sheet-submit">Перейти до оплати</button>
+        </form>
+    {% endif %}
 </div>

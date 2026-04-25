@@ -15,6 +15,22 @@ class ReportForm(ModelForm):
     def __init__(self, *args, **kwargs):
         """Configure the FormHelper for crispy-forms."""
         super().__init__(*args, **kwargs)
+        self.fields["donation_document"].widget.attrs.update({"class": "report-form-input"})
+        self.fields["photo"].widget.attrs.update({"class": "report-form-input"})
+        self.fields["description"].widget.attrs.update(
+            {
+                "class": "report-form-textarea",
+                "placeholder": "Опишіть, як саме були використані кошти та що вдалося передати.",
+            }
+        )
+        self.fields["spent_sum"].widget.attrs.update(
+            {
+                "class": "report-form-input",
+                "placeholder": "Наприклад, 25000",
+                "min": "1",
+                "step": "0.01",
+            }
+        )
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "my-4 w-100"
