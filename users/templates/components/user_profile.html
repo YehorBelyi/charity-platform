@@ -1,36 +1,71 @@
-<div class="header my-3">
-	<h1>Ваш профіль</h1>
-</div>
-<div class="">
-	<div class="profile-section" style="display: flex">
-		<div class="profile-picture">
-			{% if avatar %}
-				<img src="{{ avatar }}" alt="avatar">
-			{% else %}
-				<div class="no-avatar">No avatar</div>
-			{% endif %}
-		</div>
-		<div class="profile-info p-3">
-			<div class="profile-info-text">
-				<p><span class="badge text-bg-primary">Ім'я та прізвище</span> {{ full_name }}</p>
-				<p><span class="badge text-bg-primary">Користувацьке ім'я:</span> {{ username }}</p>
-				{#			<p>Status: {{ status }}</p>#}
-				{#			<p>Rank: {{ rank }}</p>#}
-				{#			<p>Phone: {{ phone_number }}</p>#}
-				{#			<p>Short bio:<br>{{ short_bio }}</p>#}
-			</div>
-			<div class="profile-edit-button">
-				<button
-					class="btn btn-warning"
-					hx-get="{% url 'edit_profile' %}"
-					hx-target="#modal-body"
-					hx-trigger="click"
-					data-bs-toggle="modal"
-					data-bs-target="#profileModal">
-					Редагувати
-				</button>
-			</div>
-		</div>
-	</div>
+<div class="profile-card">
+    <div class="profile-card-top">
+        <div class="profile-avatar-wrap">
+            {% if avatar %}
+                <img src="{{ avatar }}" alt="Аватар користувача {{ username }}" class="profile-avatar-image">
+            {% else %}
+                <div class="profile-avatar-placeholder">{{ username|first|upper }}</div>
+            {% endif %}
+        </div>
 
+        <div class="profile-card-copy">
+            <p class="profile-card-eyebrow">Огляд акаунта</p>
+            <h2 class="profile-card-title">{{ full_name|default:username }}</h2>
+            <p class="profile-card-handle">@{{ username }}</p>
+
+            <div class="profile-badges">
+                <span class="profile-badge">{{ status|default:"Статус не вказано" }}</span>
+                <span class="profile-badge">{{ rank|default:"Звання не вказано" }}</span>
+                <span class="profile-badge">{% if is_verified %}Верифіковано{% else %}Не верифіковано{% endif %}</span>
+            </div>
+
+            <button
+                class="profile-action-button"
+                hx-get="{% url 'edit_profile' %}"
+                hx-target="#modal-body"
+                hx-trigger="click"
+                data-bs-toggle="modal"
+                data-bs-target="#profileModal">
+                Редагувати профіль
+            </button>
+        </div>
+    </div>
+
+    <div class="profile-stats-grid">
+        <div class="profile-stat-card">
+            <span class="profile-stat-label">Збори</span>
+            <strong class="profile-stat-value">{{ fundraisers_count }}</strong>
+        </div>
+        <div class="profile-stat-card">
+            <span class="profile-stat-label">Донати</span>
+            <strong class="profile-stat-value">{{ donations_count }}</strong>
+        </div>
+    </div>
+
+    <div class="profile-details-grid">
+        <div class="profile-detail-item">
+            <span class="profile-detail-label">Повне ім'я</span>
+            <p class="profile-detail-value">{{ full_name|default:"Не вказано" }}</p>
+        </div>
+        <div class="profile-detail-item">
+            <span class="profile-detail-label">Ім'я користувача</span>
+            <p class="profile-detail-value">{{ username }}</p>
+        </div>
+        <div class="profile-detail-item">
+            <span class="profile-detail-label">Телефон</span>
+            <p class="profile-detail-value">{{ phone_number|default:"Не вказано" }}</p>
+        </div>
+        <div class="profile-detail-item">
+            <span class="profile-detail-label">Статус</span>
+            <p class="profile-detail-value">{{ status|default:"Не вказано" }}</p>
+        </div>
+        <div class="profile-detail-item">
+            <span class="profile-detail-label">Звання</span>
+            <p class="profile-detail-value">{{ rank|default:"Не вказано" }}</p>
+        </div>
+        <div class="profile-detail-item profile-detail-item-wide">
+            <span class="profile-detail-label">Біо</span>
+            <p class="profile-detail-value">{{ short_bio|default:"Короткий опис ще не додано." }}</p>
+        </div>
+    </div>
 </div>

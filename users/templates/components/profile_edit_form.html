@@ -1,16 +1,78 @@
-{% load crispy_forms_tags %}
-
 <form
+    class="profile-edit-form"
     hx-post="{% url 'edit_profile' %}"
-    hx-target="#profile-content"
+    hx-target="#modal-body"
     hx-swap="innerHTML"
     enctype="multipart/form-data"
 >
     {% csrf_token %}
 
-	{% crispy form %}
+    <div class="profile-edit-header">
+        <p class="profile-edit-eyebrow">Оновлення профілю</p>
+        <h3 class="profile-edit-title">Редагуйте основну інформацію та фото профілю.</h3>
+    </div>
 
-    <button type="submit" class="btn btn-primary w-100">
-        Зберегти
-    </button>
+    {% if form.non_field_errors %}
+        <div class="profile-edit-errors">
+            {% for error in form.non_field_errors %}
+                <p class="profile-edit-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="profile-edit-grid">
+        <div class="profile-edit-field profile-edit-field-wide">
+            <label class="profile-edit-label" for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+                {% for error in form.avatar.errors %}
+                    <p class="profile-edit-error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="profile-edit-field">
+            <label class="profile-edit-label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                {% for error in form.first_name.errors %}
+                    <p class="profile-edit-error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="profile-edit-field">
+            <label class="profile-edit-label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                    <p class="profile-edit-error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="profile-edit-field profile-edit-field-wide">
+            <label class="profile-edit-label" for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+                {% for error in form.phone_number.errors %}
+                    <p class="profile-edit-error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="profile-edit-field profile-edit-field-wide">
+            <label class="profile-edit-label" for="{{ form.short_bio.id_for_label }}">{{ form.short_bio.label }}</label>
+            {{ form.short_bio }}
+            {% if form.short_bio.errors %}
+                {% for error in form.short_bio.errors %}
+                    <p class="profile-edit-error">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="profile-edit-actions">
+        <button type="submit" class="profile-edit-submit">Зберегти зміни</button>
+    </div>
 </form>

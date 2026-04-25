@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from donations.models import Payment
+from fundraisers.models import FundraisingAnnouncement
 from users.forms import UserLoginForm, UserSignUpForm, UserUpdateForm
 
 
@@ -102,12 +104,15 @@ class UserProfileView(LoginRequiredMixin, View):
 
         context = {
             'username': current_user.username,
-            'full_name': f"{current_user.first_name} {current_user.last_name}",
+            'full_name': f"{current_user.first_name or ''} {current_user.last_name or ''}".strip(),
             'status': current_user.get_status_display(),
             'rank': current_user.get_rank_display(),
             'phone_number': current_user.phone_number,
             'avatar': current_user.avatar.url if current_user.avatar else None,
             'short_bio': current_user.short_bio,
+            'fundraisers_count': FundraisingAnnouncement.objects.filter(author=current_user).count(),
+            'donations_count': Payment.objects.filter(user=current_user, is_finished=True).count(),
+            'is_verified': current_user.is_verified(),
         }
         return render(request, self.template_name, context)
 
@@ -140,11 +145,15 @@ class UserProfileEditView(LoginRequiredMixin, View):
                 'phone_number': request.user.phone_number,
                 'avatar': request.user.avatar.url if request.user.avatar else None,
                 'short_bio': request.user.short_bio,
+                'fundraisers_count': FundraisingAnnouncement.objects.filter(author=request.user).count(),
+                'donations_count': Payment.objects.filter(user=request.user, is_finished=True).count(),
+                'is_verified': request.user.is_verified(),
             }
 
-            response = HttpResponse(request, 'components/user_profile.html', context)
+            response = render(request, 'components/user_profile.html', context)
+            response['HX-Retarget'] = '#profile-content'
+            response['HX-Reswap'] = 'innerHTML'
             response['HX-Trigger'] = 'profileUpdated'
             return response
 
-        print(form.errors)
         return render(request, self.template_name, {'form': form})

@@ -4,18 +4,23 @@
 {% block title %}Профіль{% endblock %}
 
 {% block container %}
-<section class="profile-page">
+<section class="profile-page profile-page-redesign">
     <div class="container">
-        <div class="profile-main-wrapper">
-            
-            <div class="profile-info-section" id="profile-content">
-                {% include 'components/user_profile.html' %}
+        <div class="profile-shell">
+            <div class="profile-shell-header">
+                <p class="profile-shell-eyebrow">Особистий кабінет</p>
+                <h1 class="profile-shell-title">Ваш профіль, ваші збори та історія донатів в одному місці.</h1>
             </div>
 
-            <div class="profile-nav-section">
-                {% include 'components/user_bar.html' %}
-            </div>
+            <div class="profile-main-wrapper">
+                <div class="profile-info-section" id="profile-content">
+                    {% include 'components/user_profile.html' %}
+                </div>
 
+                <div class="profile-nav-section">
+                    {% include 'components/user_bar.html' %}
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -27,8 +32,7 @@
                 <h5 class="modal-title">Редагувати профіль</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body" id="modal-body">
-            </div>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 </div>
