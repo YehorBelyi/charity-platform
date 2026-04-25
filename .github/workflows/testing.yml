@@ -17,6 +17,9 @@ jobs:
     name: Tests
     runs-on: ${{ matrix.os }}
 
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.3.0
