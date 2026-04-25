@@ -5,46 +5,118 @@
 {% block title %}Верифікація{% endblock %}
 
 {% block container %}
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert
-                {% if message.tags == 'error' %}alert-danger
-                {% elif message.tags == 'success' %}alert-success
-                {% elif message.tags == 'warning' %}alert-warning
-                {% elif message.tags == 'info' %}alert-info
-                {% else %}alert-primary
-                {% endif %} my-3 text-center">
-                {{ message }}
+<section class="verification-page">
+    <div class="container">
+        <div class="verification-shell">
+            <div class="verification-shell-header">
+                <p class="verification-shell-eyebrow">Безпека платформи</p>
+                <h1 class="verification-shell-title">Пройдіть верифікацію, щоб створювати власні збори на платформі.</h1>
+                <p class="verification-shell-text">
+                    Ми перевіряємо дані авторів зборів, щоб користувачі бачили прозорі та надійні ініціативи.
+                    Заповніть коротку заявку та додайте документи, які підтверджують ваш статус.
+                </p>
             </div>
-        {% endfor %}
-    {% endif %}
 
-    {% if is_form_shown %}
-        <h3>Подати заявку на верифікацію</h3>
+            {% if messages %}
+                <div class="verification-messages">
+                    {% for message in messages %}
+                        <div class="alert
+                            {% if message.tags == 'error' %}alert-danger
+                            {% elif message.tags == 'success' %}alert-success
+                            {% elif message.tags == 'warning' %}alert-warning
+                            {% elif message.tags == 'info' %}alert-info
+                            {% else %}alert-primary
+                            {% endif %} verification-alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-        <form method="post" enctype="multipart/form-data" class="mt-4">
-            {% csrf_token %}
+            <div class="verification-grid">
+                <div class="verification-form-card">
+                    {% if is_form_shown %}
+                        <p class="verification-card-eyebrow">Заявка</p>
+                        <h2 class="verification-card-title">Подати заявку на верифікацію</h2>
+                        <p class="verification-card-text">
+                            Вкажіть, ким ви є, додайте короткий опис і прикріпіть до трьох документів.
+                            Після перевірки ви зможете створювати власні благодійні збори.
+                        </p>
 
-            {{ form|crispy }}
+                        <form method="post" enctype="multipart/form-data" class="verification-form">
+                            {% csrf_token %}
 
-            <hr>
+                            {{ form|crispy }}
 
-            <label class="form-label">Документи</label>
-            <input type="file"
-                   id="file-input"
-                   name="documents"
-                   multiple
-                   class="form-control">
+                            <div class="verification-upload-block">
+                                <div class="verification-upload-head">
+                                    <label class="verification-upload-label" for="file-input">Документи</label>
+                                    <p class="verification-upload-hint">Додайте від 1 до 3 файлів, які підтверджують ваш статус.</p>
+                                </div>
 
-            <ul id="file-list" class="list-group mt-3"></ul>
+                                <input type="file"
+                                       id="file-input"
+                                       name="documents"
+                                       multiple
+                                       class="form-control verification-file-input">
 
-            <button type="submit" class="btn btn-success w-100 mt-4">
-                Відправити заявку
-            </button>
-        </form>
-    {% endif %}
+                                <ul id="file-list" class="verification-file-list"></ul>
+                            </div>
+
+                            <button type="submit" class="verification-submit-button">
+                                Відправити заявку
+                            </button>
+                        </form>
+                    {% else %}
+                        <p class="verification-card-eyebrow">Статус</p>
+                        <h2 class="verification-card-title">Заявка обробляється</h2>
+                        <p class="verification-card-text">
+                            Стан вашої заявки відображено в повідомленнях вище. Після рішення адміністраторів
+                            ви зможете повернутися до створення збору або повторно подати документи, якщо це буде потрібно.
+                        </p>
+
+                        <div class="verification-status-actions">
+                            <a href="{% url 'profile' %}" class="verification-secondary-link">Перейти до профілю</a>
+                            <a href="{% url 'home' %}" class="verification-secondary-link verification-secondary-link-muted">На головну</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <aside class="verification-info-card">
+                    <p class="verification-card-eyebrow">Що важливо</p>
+                    <h2 class="verification-card-title">Підготуйте заявку заздалегідь</h2>
+                    <p class="verification-card-text">
+                        Чим точніше й охайніше заповнена форма, тим швидше її зможуть перевірити.
+                    </p>
+
+                    <div class="verification-note-list">
+                        <div class="verification-note-item">
+                            <span class="verification-note-index">01</span>
+                            <div>
+                                <h3 class="verification-note-title">Оберіть правильну роль</h3>
+                                <p class="verification-note-text">Вкажіть роль, яка відповідає вашому реальному статусу на платформі.</p>
+                            </div>
+                        </div>
+                        <div class="verification-note-item">
+                            <span class="verification-note-index">02</span>
+                            <div>
+                                <h3 class="verification-note-title">Додайте короткий опис</h3>
+                                <p class="verification-note-text">Поясніть, хто ви та які документи прикріплюєте для перевірки.</p>
+                            </div>
+                        </div>
+                        <div class="verification-note-item">
+                            <span class="verification-note-index">03</span>
+                            <div>
+                                <h3 class="verification-note-title">Завантажте читабельні файли</h3>
+                                <p class="verification-note-text">Документи мають бути зрозумілими, повними й придатними для перегляду.</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
 
     <script src="{% static 'js/file_picker.js' %}"></script>
-
+</section>
 {% endblock %}

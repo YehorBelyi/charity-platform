@@ -28,6 +28,12 @@
                 data-bs-target="#profileModal">
                 Редагувати профіль
             </button>
+
+            {% if not is_verified %}
+                <a href="{% url 'verification_create' %}" class="profile-action-button">
+                    Пройти верифікацію
+                </a>
+            {% endif %}
         </div>
     </div>
 

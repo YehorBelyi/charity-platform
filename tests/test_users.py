@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 @pytest.mark.django_db
@@ -34,3 +35,20 @@ class TestUsers:
             password="verify123"
         )
         assert not user.is_verified()
+
+    def test_signup_redirects_to_verification(self, client):
+        response = client.post(
+            reverse("signup"),
+            data={
+                "username": "new_user",
+                "first_name": "Іван",
+                "last_name": "Петренко",
+                "email": "new_user@example.com",
+                "password": "password123",
+                "phone_number": "+380991112233",
+                "date_of_birth": "2000-01-01",
+            },
+        )
+
+        assert response.status_code == 302
+        assert response.url == reverse("verification_create")

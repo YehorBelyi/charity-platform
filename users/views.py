@@ -2,6 +2,7 @@
 Views for users and their profile information.
 """
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -71,7 +72,11 @@ class SignUpView(View):
             user.set_password(form.cleaned_data.get("password"))
             user.save()
             login(request, user)
-            return redirect('home')
+            messages.info(
+                request,
+                "Акаунт створено. Тепер пройдіть верифікацію, щоб мати змогу створювати власні збори."
+            )
+            return redirect('verification_create')
 
         return render(request, self.template_name, context)
 

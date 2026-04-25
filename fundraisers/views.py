@@ -1,5 +1,6 @@
 """Django views for fundraisers app"""
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
@@ -27,6 +28,20 @@ class CreateAnnouncementView(LoginRequiredMixin, CreateView):
     form_class = AddUpdateFundraisingAnnouncementForm
     success_url = "/"
     login_url = "/users/login/"
+
+    def dispatch(self, request, *args, **kwargs):
+        """Allow only verified users to create fundraisers."""
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
+        if not request.user.is_verified():
+            messages.warning(
+                request,
+                "Щоб створити власний збір, спершу пройдіть верифікацію."
+            )
+            return redirect("verification_create")
+
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         """Set current user as the author of the form."""
