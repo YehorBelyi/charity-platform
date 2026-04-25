@@ -4,6 +4,8 @@ which handles all payment processes
 on the website.
 """
 
+from decimal import Decimal
+
 import stripe
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from fundraisers.models import FundraisingAnnouncement
 from .models import Payment
+from users.models import CustomUser
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 webhook_secret = settings.STRIPE_WEBHOOK_SECRET
@@ -47,13 +50,22 @@ def stripe_webhook_view(request):
 
         announcement_id = session["metadata"]["announcement_id"]
         amount = session["metadata"]["amount"]
+        user_id = session["metadata"].get("user_id")
 
         announcement = FundraisingAnnouncement.objects.get(
             id=announcement_id
         )
 
+        user = None
+        if user_id:
+            user = CustomUser.objects.filter(id=user_id).first()
+
+        announcement.current_sum += Decimal(amount)
+        announcement.save(update_fields=["current_sum"])
+
         Payment.objects.create(
             announcement=announcement,
+            user=user,
             amount=amount,
             stripe_payment_intent=session["payment_intent"],
             is_finished=True

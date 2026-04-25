@@ -2,62 +2,134 @@
 {% load static %}
 
 {% block container %}
-<div class="container page-bottom-space">
-    <div class="announcement-card-detail">
-        <div class="announcement-image-wrapper detail-image-height">
-            {% if announcement.photo %}
-                <img src="{{ announcement.photo.url }}" class="announcement-image" alt="{{ announcement.title }}">
-            {% else %}
-                <div class="placeholder-box">
-                    <span>Фото відсутнє</span>
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="announcement-content no-padding-sides">
-            <h1 class="hero-title announcement-detail-header">{{ announcement.title }}</h1>
-            
-            <div class="progress-container">
-                {% widthratio announcement.current_sum announcement.target_sum 100 as percentage %}
-                <div class="progress-track track-tall">
-                    <div class="progress-fill 
-                        {% if percentage|add:0 < 25 %}red
-                        {% elif percentage|add:0 < 50 %}orange
-                        {% elif percentage|add:0 < 75 %}yellow
-                        {% else %}green{% endif %}" 
-                        style="width: {{ percentage }}%">
+<section class="announcement-page">
+    <div class="container page-bottom-space">
+        {% if messages %}
+            <div class="announcement-messages">
+                {% for message in messages %}
+                    <div class="alert
+                        {% if message.tags == 'error' %}alert-danger
+                        {% elif message.tags == 'success' %}alert-success
+                        {% elif message.tags == 'warning' %}alert-warning
+                        {% elif message.tags == 'info' %}alert-info
+                        {% else %}alert-primary
+                        {% endif %} announcement-alert">
+                        {{ message }}
                     </div>
-                </div>
-                <div class="progress-stats">
-                    <span class="raised-amount-large">{{ announcement.current_sum }} грн</span>
-                    <span class="target-amount">{{ announcement.target_sum }} грн</span>
-                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if payment_status == "success" %}
+            <div class="announcement-payment-banner announcement-payment-banner-success">
+                <p class="announcement-payment-eyebrow">Оплату завершено</p>
+                <h2 class="announcement-payment-title">Дякуємо за підтримку цього збору.</h2>
+                <p class="announcement-payment-text">
+                    {% if payment_amount %}
+                        Ваш донат на суму {{ payment_amount }} грн успішно оброблено.
+                    {% else %}
+                        Ваш донат успішно оброблено.
+                    {% endif %}
+                    Оновлення прогресу збору може з’явитися за мить після підтвердження Stripe.
+                </p>
+            </div>
+        {% elif payment_status == "canceled" %}
+            <div class="announcement-payment-banner announcement-payment-banner-cancel">
+                <p class="announcement-payment-eyebrow">Оплату не завершено</p>
+                <h2 class="announcement-payment-title">Платіж було скасовано або не завершено.</h2>
+                <p class="announcement-payment-text">
+                    Ви можете спробувати ще раз у будь-який момент. Дані збору залишилися без змін.
+                </p>
+            </div>
+        {% endif %}
+
+        <div class="announcement-card-detail">
+            <div class="announcement-image-wrapper detail-image-height">
+                {% if announcement.photo %}
+                    <img src="{{ announcement.photo.url }}" class="announcement-image" alt="{{ announcement.title }}">
+                {% else %}
+                    <div class="placeholder-box">
+                        <span>Фото відсутнє</span>
+                    </div>
+                {% endif %}
             </div>
 
-            <form action="{% url 'payment-set' announcement.pk %}" class="form-margin">
-                {% csrf_token %}
-                <button type="submit" class="btn-donate no-border">Зробити донат</button>
-            </form>
+            <div class="announcement-content no-padding-sides">
+                <h1 class="hero-title announcement-detail-header">{{ announcement.title }}</h1>
 
-            <div class="detail-info-block">
-                <span class="detail-label">Про збір</span>
-                <p class="hero-text black-text">{{ announcement.description }}</p>
-                
-                <span class="detail-label">Операційний напрямок</span>
-                <p class="medium-text">{{ announcement.operational_direction }}</p>
-
-                <span class="detail-label">Підрозділ</span>
-                <div class="unit-badge">
-                    <img src="{{ announcement.unit.logo.url }}" class="unit-logo">
-                    <a href="{% url 'units:unit' announcement.unit.id %}" class="unit-link">
-                        {{ announcement.unit.name }}
-                    </a>
+                <div class="progress-container">
+                    {% widthratio announcement.current_sum announcement.target_sum 100 as percentage %}
+                    <div class="progress-track track-tall">
+                        <div class="progress-fill
+                            {% if percentage|add:0 < 25 %}red
+                            {% elif percentage|add:0 < 50 %}orange
+                            {% elif percentage|add:0 < 75 %}yellow
+                            {% else %}green{% endif %}"
+                            style="width: {{ percentage }}%">
+                        </div>
+                    </div>
+                    <div class="progress-stats">
+                        <span class="raised-amount-large">{{ announcement.current_sum }} грн</span>
+                        <span class="target-amount">{{ announcement.target_sum }} грн</span>
+                    </div>
                 </div>
 
-                <span class="detail-label">Дата створення</span>
-                <p class="creation-date">{{ announcement.date }}</p>
+                <div class="announcement-donation-cta form-margin">
+                    <p class="announcement-donation-eyebrow">Підтримайте збір</p>
+                    <p class="announcement-donation-text">
+                        Оберіть комфортну суму та перейдіть до безпечної оплати через Stripe без зайвих проміжних сторінок.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn-donate no-border"
+                        hx-get="{% url 'payment-set' announcement.pk %}"
+                        hx-target="#donation-modal-body"
+                        hx-swap="innerHTML"
+                        data-bs-toggle="modal"
+                        data-bs-target="#donationModal">
+                        Зробити донат
+                    </button>
+                </div>
+
+                <div class="detail-info-block">
+                    <span class="detail-label">Про збір</span>
+                    <p class="hero-text black-text">{{ announcement.description }}</p>
+
+                    <span class="detail-label">Операційний напрямок</span>
+                    <p class="medium-text">{{ announcement.operational_direction|default:"Не вказано" }}</p>
+
+                    <span class="detail-label">Підрозділ</span>
+                    {% if announcement.unit %}
+                        <div class="unit-badge">
+                            {% if announcement.unit.logo %}
+                                <img src="{{ announcement.unit.logo.url }}" class="unit-logo" alt="{{ announcement.unit.name }}">
+                            {% endif %}
+                            <a href="{% url 'units:unit' announcement.unit.id %}" class="unit-link">
+                                {{ announcement.unit.name }}
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="medium-text">Не вказано</p>
+                    {% endif %}
+
+                    <span class="detail-label">Дата створення</span>
+                    <p class="creation-date">{{ announcement.date }}</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="donationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content donation-modal">
+                <div class="modal-header donation-modal-header">
+                    <h5 class="modal-title donation-modal-heading">Підтримати збір</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                </div>
+                <div class="modal-body donation-modal-body" id="donation-modal-body"></div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

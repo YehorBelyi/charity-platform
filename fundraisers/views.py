@@ -14,9 +14,13 @@ from .models import FundraisingAnnouncement
 def fundraising_announcement(request, announcement_id):
     """Get requested announcement and render corresponding template."""
     announcement = get_object_or_404(FundraisingAnnouncement, pk=announcement_id)
+    payment_status = request.GET.get("payment_status")
+    payment_amount = request.GET.get("payment_amount")
 
     context = {
-        "announcement": announcement
+        "announcement": announcement,
+        "payment_status": payment_status,
+        "payment_amount": payment_amount,
     }
     return render(request, "fundraisers/announcement.html", context)
 
