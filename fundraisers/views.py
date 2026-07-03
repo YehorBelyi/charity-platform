@@ -59,7 +59,7 @@ class CreateAnnouncementView(LoginRequiredMixin, CreateView):
 class AnnouncementsView(ListView):
     """Display list of announcements."""
     template_name = "fundraisers/announcements.html"
-    queryset = FundraisingAnnouncement.objects.all()
+    queryset = FundraisingAnnouncement.objects.filter(is_closed=False)
     paginate_by = 15
     ordering = "-date"
 
