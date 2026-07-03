@@ -1084,6 +1084,39 @@ body {
     background: #a92d45;
 }
 
+.profile-card-button-view {
+    border-color: rgba(13, 148, 136, 0.24);
+    background: #ecfeff;
+    color: #0f766e;
+}
+
+.profile-card-button-view:hover,
+.profile-card-button-view:focus {
+    border-color: rgba(13, 148, 136, 0.4);
+    background: #ccfbf1;
+    color: #115e59;
+}
+
+.profile-card-button-edit {
+    background: #f59e0b;
+    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.22);
+}
+
+.profile-card-button-edit:hover,
+.profile-card-button-edit:focus {
+    background: #d97706;
+}
+
+.profile-card-button-report {
+    background: #7c3aed;
+    box-shadow: 0 12px 24px rgba(124, 58, 237, 0.22);
+}
+
+.profile-card-button-report:hover,
+.profile-card-button-report:focus {
+    background: #6d28d9;
+}
+
 .profile-stats-grid,
 .profile-details-grid {
     display: grid;

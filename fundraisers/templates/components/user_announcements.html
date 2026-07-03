@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="profile-announcement-actions">
-                            <a href="{% url 'fundraisers:fundraising_announcement' announcement_id=ann.id %}" class="profile-card-button profile-card-button-secondary">
+                            <a href="{% url 'fundraisers:fundraising_announcement' announcement_id=ann.id %}" class="profile-card-button profile-card-button-secondary profile-card-button-view">
                                 Переглянути
                             </a>
 
@@ -58,7 +58,7 @@
                                     <button type="submit" class="profile-card-button">Закрити збір</button>
                                 </form>
                             {% elif ann.is_closed and report %}
-                                <a href="{% url 'reports:report' report_id=report.id %}" class="profile-card-button">
+                                <a href="{% url 'reports:report' report_id=report.id %}" class="profile-card-button profile-card-button-report">
                                     Відкрити звіт
                                 </a>
                             {% elif ann.is_closed %}
@@ -66,7 +66,7 @@
                                     Створити звіт
                                 </a>
                             {% else %}
-                                <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="profile-card-button">
+                                <a href="{% url 'fundraisers:update_announcement' announcement_id=ann.id %}" class="profile-card-button profile-card-button-edit">
                                     Редагувати
                                 </a>
                             {% endif %}
