@@ -1,46 +1,95 @@
-{% extends 'pages/index.html' %}
-{% load static %}
-{% load crispy_forms_tags %}
+{% extends 'pages/index.html' %} {% load static %} {% load crispy_forms_tags %} {% block container %}
 
-{% block container %}
-	<div class="container page-bottom-space">
-		<div class="search-form-section">
-			<h1 class="search-title">Усі збори</h1>
-			<div class="search-form-wrapper">
-				{% crispy form %}
-			</div>
-		</div>
+<div class="container page-bottom-space">
 
-		{% if not object_list %}
-			<div class="empty-results">
-				<h2 class="empty-results-text">За Вашим запитом нічого не знайдено</h2>
-			</div>
-		{% endif %}
+    <div class="search-form-section">
+        <h1 class="search-title">Усі збори</h1>
+        <div class="search-form-wrapper">{% crispy form %}</div>
+    </div>
 
-		<div class="announcement-list">
-			{% for announcement in object_list %}
-				{% include 'components/announcement_card.html' %}
-			{% endfor %}
-		</div>
+    {% if not object_list %}
+    <div class="empty-results">
+        <h2 class="empty-results-text">За Вашим запитом нічого не знайдено</h2>
+    </div>
+    {% endif %}
 
-		{% if is_paginated %}
-			<nav class="pagination-container">
-				<ul class="pagination-list">
-					<li class="page-item">
-						<a class="pagination-link" href="{% if page_obj.has_previous %}{{ request.path }}?page=
-							{{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% endif %}">&laquo;</a>
-					</li>
+    <div class="announcement-list">
+        {% for announcement in object_list %} {% include 'components/announcement_card.html' %} {% endfor %}
+    </div>
 
-					<li class="page-item">
-						<a class="pagination-link active" href="#">{{ page_obj.number }}</a>
-					</li>
-
-					<li class="page-item">
-						<a class="pagination-link" href="{% if page_obj.has_next %}{{ request.path }}?page=
-							{{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% endif %}">&raquo;</a>
-					</li>
-				</ul>
-			</nav>
-		{% endif %}
-	</div>
+    {% if is_paginated %}
+    <nav class="pagination-container">
+        <ul class="pagination-list">
+            <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                <a
+                    class="pagination-link"
+                    href="{% if page_obj.has_previous %}{{request.path}}?page={{page_obj.previous_page_number}}&{{ query_params }}{% endif %}"
+                    >&laquo;</a
+                >
+            </li>
+            <li class="page-item">
+                <a
+                    class="pagination-link {% if page_obj.number == 1 %}active{% endif %}"
+                    href="{{request.path}}?page=1&{{ query_params }}"
+                    >1</a
+                >
+            </li>
+            {% if page_obj.number > 3 %} {% if page_obj.number != 4 %}
+            <li class="page-item disabled"><a class="pagination-link">...</a></li>
+            {% endif %}
+            <li class="page-item">
+                <a
+                    class="pagination-link"
+                    href="{{request.path}}?page={{page_obj.number|add:'-2'}}&{{ query_params }}"
+                >
+                    {{page_obj.number|add:'-2'}}
+                </a>
+            </li>
+            {% endif %} {% if page_obj.number > 2 %}
+            <li class="page-item">
+                <a
+                    class="pagination-link"
+                    href="{{request.path}}?page={{page_obj.previous_page_number}}&{{ query_params }}"
+                    >{{page_obj.previous_page_number}}</a
+                >
+            </li>
+            {% endif %} {% if page_obj.number != 1 and page_obj.number != page_obj.paginator.num_pages %}
+            <li class="page-item"><a class="pagination-link active" href="#">{{page_obj.number}}</a></li>
+            {% endif %} {% if page_obj.paginator.num_pages|add:"-1" > page_obj.number %}
+            <li class="page-item">
+                <a
+                    class="pagination-link"
+                    href="{{request.path}}?page={{page_obj.next_page_number}}&{{ query_params }}"
+                    >{{page_obj.next_page_number}}</a
+                >
+            </li>
+            {% endif %} {% if page_obj.paginator.num_pages|add:"-2" > page_obj.number %}
+            <li class="page-item">
+                <a
+                    class="pagination-link"
+                    href="{{request.path}}?page={{page_obj.number|add:2}}&{{ query_params }}"
+                    >{{page_obj.number|add:2}}</a
+                >
+            </li>
+            {% if page_obj.number|add:3 != page_obj.paginator.num_pages %}
+            <li class="page-item disabled"><a class="pagination-link">...</a></li>
+            {% endif %} {% endif %}
+            <li class="page-item">
+                <a
+                    class="pagination-link {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}"
+                    href="{{request.path}}?page={{page_obj.paginator.num_pages}}&{{ query_params }}"
+                    >{{page_obj.paginator.num_pages}}</a
+                >
+            </li>
+            <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                <a
+                    class="pagination-link"
+                    href="{% if page_obj.has_next %}{{request.path}}?page={{page_obj.next_page_number}}&{{ query_params }}{% endif %}"
+                    >&raquo;</a
+                >
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 {% endblock %}
