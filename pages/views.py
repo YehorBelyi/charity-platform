@@ -9,6 +9,6 @@ class HomePageView(View):
     template_name = 'pages/index.html'
 
     def get(self, request):
-        recents = FundraisingAnnouncement.objects.filter(is_closed=False).order_by('date')[:4]
+        recents = FundraisingAnnouncement.objects.filter(is_closed=False).order_by('date')[:6]
         context = {'recents': recents}
         return render(request, self.template_name, context)

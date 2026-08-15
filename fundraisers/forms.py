@@ -20,7 +20,7 @@ class AddUpdateFundraisingAnnouncementForm(forms.ModelForm):
     #: The operational direction where the supported unit is deployed.
     operational_direction = forms.CharField(label="Напрямок фронту:", required=False)
     #: Supported unit.
-    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label="Підрозділ", required=False)
+    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label="Підрозділ:", required=False)
 
     def __init__(self, *args, **kwargs):
         """Configure the FormHelper for crispy-forms."""
@@ -28,15 +28,22 @@ class AddUpdateFundraisingAnnouncementForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "mt-5"
+        self.helper.label_class = "announcement-form-label"
 
         self.helper.layout = Layout(
-            Field("title"),
-            Field("target_sum"),
-            Field("description"),
-            Field("unit"),
-            Field("operational_direction"),
-            Field("photo"),
-            Submit("submit", "Відправити")
+            Div(
+                Field("title", placeholder="Назва збору", css_class="announcement-form-input"),
+                Field("target_sum", placeholder="Сума, яку потрібно зібрати", css_class="announcement-form-input"),
+                Field("description", placeholder="Детальний опис збору", css_class="announcement-form-textarea"),
+                Field("unit", css_class="announcement-form-input"),
+                Field("operational_direction", placeholder="Напрямок, на якому знаходиться підрозділ", css_class="announcement-form-input"),
+                Field("photo", css_class="announcement-form-input"),
+                Div(Submit("submit", "Відправити", css_class="announcement-form-button"),
+                    css_class="announcement-form-btn-container"
+                    ),
+
+                css_class="announcement-form-card"
+            )
         )
 
     class Meta:
