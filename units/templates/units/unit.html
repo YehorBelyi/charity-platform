@@ -3,29 +3,29 @@
 {% block title %} {{ unit.name }} {% endblock %}
 
 {% block container %}
-        <section class="unit-page">
-            <div class="container">
-                <div class="unit-page-card">
-                    <div class="unit-page-copy">
-                        <p class="unit-page-eyebrow">Структура</p>
-                        <h1 class="unit-page-title">{{unit.name}}</h1>
-                        <div class="unit-page-breadcrumbs">
-                {% for item in hierarchy %}
-                            <a href="{% url 'units:unit' item.id %}">{{item}}</a>/
-                {% endfor %}
-                        </div>
-                        <p class="unit-page-summary">{{unit.short_description}}</p>
+    <section class="unit-page">
+        <div class="container">
+            <div class="unit-page-card">
+                <div class="unit-page-copy">
+                    <p class="unit-page-eyebrow">Структура</p>
+                    <h1 class="unit-page-title">{{unit.name}}</h1>
+                    <div class="unit-page-breadcrumbs">
+                    {% for item in hierarchy %}
+                        <a href="{% url 'units:unit' item.id %}">{{item}}</a>{% if not forloop.last %}/{% endif %}
+                    {% endfor %}
                     </div>
-                    {% if unit.logo %}
-                    <div class="unit-page-media">
-                        <img class="unit-page-logo img-fluid" src="{{unit.logo.url}}" alt="Емблема {{ unit.name }}">
-                    </div>
-                    {% endif %}
+                    <p class="unit-page-summary">{{unit.short_description}}</p>
                 </div>
-                <div class="unit-page-description">
-                    <h2 class="unit-page-description-title">Про структуру</h2>
-                    <p class="unit-page-description-text">{{unit.description}}</p>
+                {% if unit.logo %}
+                <div class="unit-page-media">
+                    <img class="unit-page-logo img-fluid" src="{{unit.logo.url}}" alt="Емблема {{ unit.name }}">
                 </div>
+                {% endif %}
             </div>
-        </section>
+            <div class="unit-page-description">
+                <h2 class="unit-page-description-title">Про структуру</h2>
+                <p class="unit-page-description-text">{{unit.description}}</p>
+            </div>
+        </div>
+    </section>
 {% endblock %}

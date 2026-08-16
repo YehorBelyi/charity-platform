@@ -119,17 +119,18 @@
                         <p class="announcement-donation-text">
                             Оберіть комфортну суму та перейдіть до безпечної оплати через Stripe без зайвих проміжних сторінок.
                         </p>
-
-                        <button
-                            type="button"
-                            class="btn-donate no-border"
-                            hx-get="{% url 'payment-set' announcement.pk %}"
-                            hx-target="#donation-modal-body"
-                            hx-swap="innerHTML"
-                            data-bs-toggle="modal"
-                            data-bs-target="#donationModal">
-                            Зробити донат
-                        </button>
+                        <div class="btn-donate-container">
+                            <button
+                                type="button"
+                                class="btn-donate no-border"
+                                hx-get="{% url 'payment-set' announcement.pk %}"
+                                hx-target="#donation-modal-body"
+                                hx-swap="innerHTML"
+                                data-bs-toggle="modal"
+                                data-bs-target="#donationModal">
+                                Зробити донат
+                            </button>
+                        </div>
                     {% endif %}
                 </div>
 

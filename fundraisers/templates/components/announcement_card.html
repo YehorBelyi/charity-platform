@@ -1,10 +1,12 @@
 <div class="announcement-card">
 	<div class="announcement-image-wrapper">
+		<a href="{% url 'fundraisers:fundraising_announcement' announcement.id %}" class="card-link">
 		{% if announcement.photo %}
 			<img src="{{ announcement.photo.url }}" class="announcement-image" alt="{{ announcement.title }}">
 		{% else %}
-			<div class="placeholder-box"></div>
+			<div class="placeholder-box">Фото відсутнє</div>
 		{% endif %}
+		</a>
 	</div>
 
 	<div class="announcement-content">

@@ -1,12 +1,13 @@
 """Django views for fundraisers app"""
-
+import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum, Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 from django.views.generic import CreateView, ListView
-
 from reports.models import Report
 from .forms import AddUpdateFundraisingAnnouncementForm, SearchForm
 from .models import FundraisingAnnouncement
@@ -64,15 +65,39 @@ class AnnouncementsView(ListView):
     ordering = "-date"
 
     def get_context_data(self, **kwargs):
-        """Add SearchForm to the context."""
+        """Add SearchForm and query_params to the context."""
         context = super().get_context_data(**kwargs)
         context["form"] = SearchForm(self.request.GET)
+
+        query_params = self.request.GET.copy()
+        query_params.pop("page", None)
+        context["query_params"] = query_params.urlencode()
+
         return context
 
     def get_queryset(self):
-        """Filter queryset by user search request."""
-        queryset = super().get_queryset()
-        return queryset.filter(title__icontains=self.request.GET.get("search") or "")
+        """Filter and sort queryset by user search request."""
+
+        search = self.request.GET.get("search") or ""
+        queryset = super().get_queryset().filter(title__icontains=search)
+        ordering = self.request.GET.get("ordering")
+
+        if ordering == "newest":
+            queryset = queryset.order_by("-date")
+        elif ordering == "biggest":
+            queryset = queryset.order_by("-target_sum")
+        else:
+            # Calculate the total amount of donations for each announcement over the last few days
+            queryset = queryset.annotate(
+                recent_payments_sum=Sum(
+                    "payments__amount",
+                    filter=Q(payments__date__gt=timezone.now().date() - datetime.timedelta(days=2))
+                )
+            )
+
+            queryset = queryset.order_by("-recent_payments_sum")
+
+        return queryset
 
 
 class UserAnnouncementsPartialView(LoginRequiredMixin, ListView):
