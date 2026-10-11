@@ -1,6 +1,6 @@
-# STEP (ШАГ)
+# SHAH (ШАГ)
 
-STEP (ШАГ) is a charity platform for supporting Ukrainian military needs. Volunteers and military users can create fundraising campaigns for front-line needs, set monetary goals, collect donations, and publish reports after campaigns are closed.
+SHAH (ШАГ) is a charity platform for supporting Ukrainian military needs. Volunteers and military users can create fundraising campaigns for front-line needs, set monetary goals, collect donations, and publish reports after campaigns are closed.
 
 The project is organized as a Django web application with feature apps for users, fundraisers, donations, verifications, reports, military units, and static landing pages.
 
@@ -15,14 +15,14 @@ The project is organized as a Django web application with feature apps for users
 - Closing reports with receipt/document and photo uploads after fundraising campaigns are completed.
 - Sphinx documentation scaffold and GitHub Actions for tests and linting.
 
-## 📸 Screenshots
+## Screenshots
 
 <p align="center">
-  <img src="./readme_images/1.png" width="80%" />
-  <img src="./readme_images/2.png" width="80%" />
-  <img src="./readme_images/3.png" width="80%" />
-  <img src="./readme_images/4.png" width="80%" />
-  <img src="./readme_images/5.png" width="80%" />
+  <img src="./readme_images/1.png" width="80%" alt="Home page" />
+  <img src="./readme_images/2.png" width="80%" alt="All fundraising announcements page" />
+  <img src="./readme_images/3.png" width="80%" alt="Fundraising announcement details page" />
+  <img src="./readme_images/4.png" width="80%" alt="Military unit details page" />
+  <img src="./readme_images/5.png" width="80%" alt="User profile page" />
 </p>
 
 ## Tech Stack
@@ -162,3 +162,7 @@ Build HTML documentation:
 cd docs
 .\make.bat html
 ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
